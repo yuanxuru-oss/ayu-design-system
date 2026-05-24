@@ -17,8 +17,9 @@
 | 尺寸 | 1080×1440px（3:4） |
 | 最多张数 | 18张（小红书上限） |
 | 文件形式 | 所有卡片放一个HTML文件，每张一个 `div.card` |
-| 导出方式 | 顶部固定"一键导出PNG"按钮（html2canvas CDN） |
-| 浏览器预览 | `zoom: 0.45` |
+| 导出方式 | 顶部固定"一键导出PNG"按钮（html2canvas本地文件 + JSZip打包为zip一次性下载） |
+| 浏览器预览 | `transform: scale(0.45); transform-origin: top center; margin-bottom: -792px` |
+| 本地服务器 | 用 `python3 -m http.server 8765` 打开，确保html2canvas加载正常 |
 
 ---
 
@@ -59,10 +60,13 @@
 ## 🧩 卡片结构模板
 
 ### P1 封面
-- 大标题（72-96px）+ 副标题
-- 圆形头像（`avatar.jpg`，88px，`border: 3px solid #F4D758`）
-- 署名「Esther不二」
-- 品牌三色装饰条（顶部8px渐变线）
+- 大标题（84px）用汇文明朝体（Huiwen Mincho），关键词用蓝色高亮块（`background: #2B7FD8; color: #fff; padding: 4px 16px; border-radius: 6px`）
+- 副标题（44px）一行显示，紧跟标题下方，`white-space: nowrap`
+- 圆形头像（`avatar.jpg`，120px，`border: 4px solid #F4D758`）
+- 署名「Esther不二」44px + 介绍34px
+- 整体边框：`border: 28px solid #F4D758`
+- 背景加浅色网格质感（`background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 40px 40px`）
+- 中间留白区域给用户放效果图/截图
 
 ### P2-Pn 内容页
 - 根据内容量决定排版密度
@@ -113,5 +117,7 @@
 - [ ] 页面之间排版是否有变化（不能连续3页同一layout）
 - [ ] 品牌三色比例 6:3:1
 - [ ] 头像和署名是否正确（圆形头像+「Esther不二」）
-- [ ] 导出按钮是否工作（html2canvas CDN引入、exportAll函数完整）
+- [ ] 导出按钮是否工作（html2canvas本地文件 + JSZip CDN、exportAll打包zip一次性下载）
+- [ ] 卡片是否居中显示（transform-origin: top center）
+- [ ] 用localhost打开测试导出（file://协议下js加载受限）
 - [ ] 总张数≤18
