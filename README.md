@@ -1,32 +1,54 @@
 # Personal Design Skill
 
-一套给 AI 看的个人品牌设计系统模板。
+一套给 AI 看的个人品牌设计系统。
 
 把审美写成操作手册，AI 每次帮你做页面时必须翻这本手册，不能自由发挥。**限制 AI 的自由度 = 保证输出质量。**
 
-> ⚠️ **使用前请先完成 `brand-dna.md` 的配置，填入你自己的品牌色、头像和气质关键词。**
+> ⚠️ **使用前请先完成 `brand-dna.md` 的配置：** 替换品牌色为你自己的、放入你自己的头像。
 
 ---
 
 ## Demo
 
-用这套系统生成的真实页面示例：
+用这套系统生成的真实页面：
 
 ### 📖 教程型 - 分享会页面
 
 信息清晰、步骤明确、有节奏的单页科普/教程。
 
+🔗 [在线预览](https://esthersjw.github.io/cola-ob-sharing/cola-ob-sharing.html)
+
+---
+
 ### 🎪 活动页 / Landing
 
 视觉冲击、深浅面板交替、强节奏感的活动邀请页。
+
+🔗 [在线预览](https://esthersjw.github.io/esther-design-system/demo-landing.html)
+
+---
 
 ### 📱 App 型 / 功能型
 
 功能优先、交互感、信息密度高的应用型页面。
 
+🔗 [在线预览](https://hiesther.me/tutorials/personal-dashboard/)
+
+---
+
 ### 📕 小红书图文卡片
 
 3:4 比例、字大、手机可读、一键导出 PNG 的图文卡片。
+
+🔗 [在线预览](https://hiesther.me/tutorials/esther-design-system/demo-readme-cards.html)
+
+---
+
+### 🧩 组件库全览
+
+30+ 经过验证的可复用组件。
+
+🔗 [组件库预览](https://hiesther.me/tutorials/esther-design-system/components-preview.html)
 
 ---
 
@@ -94,43 +116,27 @@ AI 每次做设计必须按这个顺序走：
 
 | 颜色 | 色值 | 比例 |
 |------|------|------|
-| 主色 | `YOUR_PRIMARY_COLOR` | 60% |
-| 强调色 | `YOUR_ACCENT_COLOR` | 30% |
-| 点缀色 | `YOUR_HIGHLIGHT_COLOR` | 10% |
+| 主色 | `#2B7FD8` | 60% |
+| 强调色 | `#F4D758` | 30% |
+| 点缀色 | `#E84A5F` | 10% |
 
 ### 字体
 
-| 用途 | 推荐字体 |
+| 用途 | 字体 |
 |------|------|
-| 中文标题 | Noto Serif SC |
+| 中文标题 | 汇文明朝体 / Noto Serif SC |
 | 中文正文 | Noto Sans SC |
 | 英文装饰 | Fraunces italic |
 | 手写/注释 | Caveat |
 | 代码/终端 | Fira Code |
 
-### 气质关键词（示例，请根据你的品牌调性修改）
+### 气质关键词（请根据你的品牌调性修改）
 
 可爱但有品质 · 手绘蜡笔感 · 有温度 · **不像 AI** · 一看就是你的
 
 ### 禁忌
 
 蓝紫渐变 · glassmorphism · neon · bounce 动画 · Inter/Roboto · 所有 section 居中 · HTML 默认样式 · 看起来像 AI 生成的通用模板
-
----
-
-## 组件库
-
-30+ 经过验证的可复用组件，每个都是写好的 HTML+CSS 代码，AI 直接复制使用。
-
-**卡片** — 杂志裁切 / 编号主导 / 标签主导 / 侧边Icon / 引用块风格
-
-**引用块** — 极简竖线 / 杂志大引号 / 手写批注 / 荧光笔高亮 / 终端命令风
-
-**代码面板** — 暗色终端 / 亮色 snippet / diff 对比 / 多 Tab
-
-**动效** — Sparkles Text · Morphing Text · Cool Mode 粒子爆发
-
-**更多** — 流程步骤条 · Do/Don't 对比 · Pull Quote · 对话气泡 · 导航栏 · 日历网格 · 书卡 · Tab 切换 · 手风琴 · 翻转卡片 · 头像集群 · 对比表 ……
 
 ---
 
@@ -153,7 +159,7 @@ AI 每次做设计必须按这个顺序走：
 ## 怎么用
 
 1. Fork 或克隆本仓库
-2. 打开 `brand-dna.md`，把所有占位符替换成你自己的品牌信息
+2. 打开 `brand-dna.md`，把品牌色替换成你自己的
 3. 放入你的头像 `assets/avatar.jpg`
 4. 把仓库链接发给你的 AI Agent，跟它说：
 
@@ -165,6 +171,4 @@ AI 每次做设计必须按这个顺序走：
 
 ## Credits
 
-设计系统框架 inspired by Esther不二。
-
-使用 [Cola](https://colaos.ai) 协助构建——首个有灵魂的操作系统。
+Design System framework inspired by [Cola](https://colaos.ai) — the first OS with a soul.
