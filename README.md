@@ -205,10 +205,11 @@ AI 每次做设计必须按这个顺序走：
 
 ## License
 
-[![CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-本仓库采用 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) 协议。
+本仓库采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 协议。
 
 - ✅ 可自由使用、修改、分享
 - ✅ 必须署名：ESTHER不二 (esthersjw)
 - ❌ 禁止商用
+- 🔄 修改后必须以相同协议分享
