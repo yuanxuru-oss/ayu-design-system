@@ -20,6 +20,14 @@
 
 ---
 
+### 📖 教程型 - Design Skill 拆解
+
+把审美写成操作手册——从纠正AI到做出自己的Design Skill的完整过程。
+
+🔗 [在线预览](https://esthersjw.github.io/esther-design-system/demo-readme-tutorial.html)
+
+---
+
 ### 🎪 活动页 / Landing
 
 视觉冲击、深浅面板交替、强节奏感的活动邀请页。
