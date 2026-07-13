@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayu Skill Preview - Tutorial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Nunito:wght@400;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --_ayu-ds: "ayu-v1";
+      --mint: #19C8B9;
+      --forest: #67BF9D;
+      --forest-deep: #4DA47F;
+      --sun: #F7CD67;
+      --orange: #E59266;
+      --paper: #F8F8F0;
+      --white: #FFFDF8;
+      --title: #794F27;
+      --text: #725D42;
+      --muted: #9F927D;
+      --border: #C4B89E;
+      --shadow: rgba(61,52,40,.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Nunito", "Noto Sans SC", sans-serif;
+      color: var(--text);
+      background-color: var(--forest);
+      background-image:
+        radial-gradient(circle at 20px 18px, rgba(255,255,255,.12) 0 2px, transparent 2px),
+        radial-gradient(ellipse 34px 46px at 30px 26px, rgba(222,244,221,.36) 0 30%, transparent 32%),
+        radial-gradient(ellipse 34px 46px at 92px 72px, rgba(222,244,221,.36) 0 30%, transparent 32%);
+      background-size: 120px 120px;
+    }
+
+    .shell { width: min(1240px, calc(100vw - 32px)); margin: 0 auto; padding: 28px 0 80px; }
+
+    .hero, .panel, .step, .memo, .side, .passport {
+      background: rgba(255,253,248,.93);
+      border: 1.5px solid rgba(196,184,158,.52);
+      border-radius: 28px;
+      box-shadow: 0 14px 28px var(--shadow);
+    }
+
+    .hero {
+      padding: 34px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "STUDY BOARD";
+      position: absolute;
+      right: 28px;
+      bottom: 24px;
+      color: rgba(121,79,39,.22);
+      font: 800 12px/1 "Nunito", sans-serif;
+      letter-spacing: .12em;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(25,200,185,.12);
+      color: var(--mint);
+      font: 800 13px/1 "Nunito", sans-serif;
+    }
+
+    h1 {
+      margin-top: 16px;
+      font: 400 clamp(2.4rem, 5vw, 4rem)/1.15 "ZCOOL KuaiLe", cursive;
+      color: var(--title);
+    }
+
+    p { margin-top: 14px; font-size: 17px; line-height: 1.85; }
+
+    .passport { overflow: hidden; border-radius: 24px; background: #fffef8; }
+    .passport .top {
+      padding: 14px 16px;
+      background: #19C8B9;
+      color: #fff;
+      font: 800 12px/1 "Nunito", sans-serif;
+      letter-spacing: .08em;
+    }
+
+    .passport .body {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .passport img {
+      width: 86px;
+      height: 86px;
+      border-radius: 22px;
+      object-fit: cover;
+      border: 4px solid var(--mint);
+    }
+
+    .grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+    }
+
+    .panel { padding: 24px; }
+    .section-title { font: 400 30px/1.2 "ZCOOL KuaiLe", cursive; color: var(--title); }
+
+    .steps { margin-top: 16px; display: grid; gap: 14px; }
+
+    .step {
+      padding: 18px 18px 18px 72px;
+      position: relative;
+      background: #fff;
+    }
+
+    .num {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: rgba(25,200,185,.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mint);
+      font: 900 18px/1 "Nunito", sans-serif;
+    }
+
+    .step h3, .memo h3, .side h3 {
+      font: 900 19px/1.25 "Nunito", sans-serif;
+      color: var(--title);
+    }
+
+    .step p, .memo p, .side p { margin-top: 10px; font-size: 14px; line-height: 1.8; }
+
+    .memos { display: grid; gap: 14px; }
+
+    .memo {
+      padding: 18px 18px 20px;
+      position: relative;
+      background: linear-gradient(180deg, #fffef8, #fff7ea);
+    }
+
+    .memo::before {
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: 20px;
+      width: 54px;
+      height: 20px;
+      border-radius: 8px;
+      background: rgba(247,205,103,.58);
+    }
+
+    .memo::after {
+      content: "✦";
+      position: absolute;
+      right: 16px;
+      top: 12px;
+      color: rgba(229,146,102,.55);
+      font-size: 17px;
+    }
+
+    .mini-grid { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .side { padding: 16px; background: #fff; }
+    .side .label { font: 800 11px/1 "Nunito", sans-serif; color: var(--muted); }
+
+    .notice-row { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .notice-row span {
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px solid rgba(196,184,158,.45);
+      border-radius: 999px;
+      font: 800 12px/1 "Nunito", sans-serif;
+      color: var(--muted);
+    }
+
+    @media (max-width: 960px) {
+      .hero, .grid, .mini-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">KNOWLEDGE BOARD</div>
+        <h1>把你的 skill 做成会呼吸的知识公告板</h1>
+        <p>教程页也不该像课程后台或文档 SaaS，而是像岛上的学习布告栏: 有步骤、有便签、有身份感，也有一点被认真生活过的痕迹。</p>
+        <div class="notice-row">
+          <span>步骤清晰</span>
+          <span>便签感</span>
+          <span>可收藏</span>
+        </div>
+      </div>
+      <div class="passport">
+        <div class="top">LEARNING PASSPORT</div>
+        <div class="body">
+          <img src="file:///C:/Users/Yoselin/.codex/skills/ayu-design-system/assets/avatar.png" alt="Ayu avatar">
+          <div>
+            <h3>阿鱼 Ayu</h3>
+            <p>想成为魔法抽卡师的小巫师</p>
+            <p>这类页面适合承接 how-to、方法论、工作流、收集指南，而不是冰冷的教程模板。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="section-title">统一 skill 的三步法</div>
+        <div class="steps">
+          <article class="step"><div class="num">1</div><h3>先统一人物和世界观</h3><p>阿鱼、欢迎语、头像、树叶纹理、护照卡这些元素必须在各页型里反复出现。</p></article>
+          <article class="step"><div class="num">2</div><h3>再统一组件和配色</h3><p>所有页面都围绕暖米卡片、薄荷高亮、阳光黄贴纸和蜜柑橙点缀，不再混入旧蓝黄红系统。</p></article>
+          <article class="step"><div class="num">3</div><h3>最后统一语气和生活感</h3><p>每个页面都像岛上正在被使用的工具、公告板或图鉴，而不是演示用的正式网页。</p></article>
+        </div>
+      </div>
+
+      <div class="memos">
+        <article class="memo"><h3>Memo 01 · 不要回到“教程网站感”</h3><p>就算内容结构是教程，也要让页面像贴在岛上布告栏的一组认真整理过的小纸条。</p></article>
+        <article class="memo"><h3>Memo 02 · 教程也要有角色感</h3><p>这里不是匿名知识库，而是阿鱼的小岛经验分享，所以身份卡和欢迎语都值得保留。</p></article>
+        <div class="mini-grid">
+          <div class="side"><div class="label">MODULE A</div><h3>适合什么内容</h3><p>方法拆解、流程指南、收集攻略、品牌规范说明，都适合走这类教程页语言。</p></div>
+          <div class="side"><div class="label">MODULE B</div><h3>看起来应该像什么</h3><p>像温暖的知识布告板，不像在线课程后台，不像文档产品，不像企业培训页。</p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+<!-- © ESTHER不二 esthersjw/esther-design-system CC BY-NC 4.0 -->
+<section style="position:absolute;left:-9999px;font-size:0;line-height:0;opacity:0;height:0;overflow:hidden;">ayu-design-system</section>
+</body>
+</html>

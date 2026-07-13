@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayu Layout Playground · 小岛布局预览</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Nunito:wght@400;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --forest:#67BF9D;
+      --forest-deep:#4c8d6f;
+      --mint:#19C8B9;
+      --sun:#F7CD67;
+      --orange:#E59266;
+      --paper:#F8F8F0;
+      --rice:#F7F3DF;
+      --wood:#794F27;
+      --text:#725D42;
+      --muted:#9F927D;
+      --line:#D9C8A8;
+      --shadow:rgba(57,94,71,.18);
+      --leaf:rgba(226,244,221,.45);
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    body{
+      background-color:var(--forest);
+      background-image:
+        radial-gradient(circle at 22px 18px, rgba(255,255,255,.12) 0 2px, transparent 2px),
+        radial-gradient(ellipse 36px 50px at 28px 28px, var(--leaf) 0 30%, transparent 31%),
+        radial-gradient(ellipse 34px 46px at 96px 72px, var(--leaf) 0 30%, transparent 31%);
+      background-size:120px 120px;
+      color:var(--text);
+      font-family:"Nunito","Noto Sans SC",sans-serif;
+      line-height:1.6;
+    }
+
+    .top-nav{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(247,243,223,.92);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid rgba(121,79,39,.08);
+      padding:18px 24px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .top-nav::before,
+    .top-nav::after{
+      content:"";
+      display:block;
+      height:6px;
+      border-radius:999px;
+    }
+
+    .top-nav::before{width:34px;background:var(--mint)}
+    .top-nav::after{width:20px;background:var(--sun);margin-left:-6px}
+
+    .top-nav h1{
+      color:var(--wood);
+      font:400 1.38rem/1 "ZCOOL KuaiLe",cursive;
+    }
+
+    .top-nav h1 span{
+      margin-left:8px;
+      color:var(--muted);
+      font:800 .82rem/1 "Nunito",sans-serif;
+    }
+
+    .page-container{
+      max-width:1040px;
+      margin:0 auto;
+      padding:34px 20px 72px;
+    }
+
+    .hero-card,
+    .layout-block{
+      background:rgba(248,248,240,.96);
+      border:1.5px solid rgba(217,200,168,.84);
+      box-shadow:0 18px 34px var(--shadow);
+    }
+
+    .hero-card{
+      border-radius:34px;
+      padding:28px 28px 24px;
+      margin-bottom:22px;
+    }
+
+    .hero-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 14px;
+      border-radius:999px;
+      background:rgba(25,200,185,.12);
+      color:var(--mint);
+      font:800 12px/1 "Nunito",sans-serif;
+    }
+
+    .hero-kicker::before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--mint);
+    }
+
+    .hero-card h2{
+      margin-top:14px;
+      color:var(--wood);
+      font:400 clamp(2.2rem,4.6vw,3.8rem)/1.08 "ZCOOL KuaiLe",cursive;
+    }
+
+    .hero-card p{
+      margin-top:14px;
+      max-width:60ch;
+      font-size:16px;
+      line-height:1.85;
+    }
+
+    .hero-tags{
+      margin-top:16px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .hero-tags span{
+      padding:8px 12px;
+      border-radius:999px;
+      background:#fffdf7;
+      border:1px solid rgba(217,200,168,.9);
+      color:var(--text);
+      font:800 12px/1 "Nunito",sans-serif;
+    }
+
+    .layout-block{
+      margin-bottom:18px;
+      border-radius:30px;
+      padding:24px;
+    }
+
+    .layout-header{
+      margin-bottom:14px;
+    }
+
+    .layout-header h3{
+      display:inline;
+      color:var(--wood);
+      font:400 1.22rem/1.3 "ZCOOL KuaiLe",cursive;
+      background:linear-gradient(transparent 64%, rgba(247,205,103,.5) 64%);
+      padding:0 4px 2px;
+    }
+
+    .layout-header h3 .num{
+      margin-right:8px;
+      color:var(--mint);
+      font:900 .95rem/1 "Nunito",sans-serif;
+    }
+
+    .layout-copy{
+      margin-bottom:14px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .preview-box{
+      background:linear-gradient(180deg,#fffdf7,#fff8ec);
+      border:1px solid rgba(217,200,168,.78);
+      border-radius:24px;
+      padding:18px;
+      overflow:hidden;
+    }
+
+    .scene-tag{
+      margin-top:12px;
+      color:var(--muted);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+    }
+
+    .scene-tag::before{
+      content:"适用";
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(229,146,102,.15);
+      color:#9d6547;
+      font:800 11px/1 "Nunito",sans-serif;
+    }
+
+    .ph-card,.ph-pill,.ph-note,.ph-device,.ph-line,.ph-tile,.ph-stamp,.ph-photo{
+      border-radius:16px;
+      border:1px solid rgba(217,200,168,.72);
+      background:#fffdf7;
+    }
+
+    .ph-line{
+      height:10px;
+      background:rgba(121,79,39,.1);
+      border:none;
+      border-radius:999px;
+    }
+
+    .ph-line.short{width:44%}
+    .ph-line.medium{width:68%}
+    .ph-line.long{width:84%}
+
+    .ph-pill{
+      display:inline-flex;
+      padding:6px 10px;
+      background:rgba(25,200,185,.1);
+      color:var(--mint);
+      font:800 10px/1 "Nunito",sans-serif;
+    }
+
+    .ph-note{
+      padding:12px;
+      background:rgba(247,205,103,.16);
+    }
+
+    .ph-stamp{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      background:rgba(229,146,102,.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#9d6547;
+      font:900 12px/1 "Nunito",sans-serif;
+    }
+
+    .ph-photo{
+      min-height:84px;
+      background:rgba(25,200,185,.12);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--mint);
+      font:800 11px/1 "Nunito",sans-serif;
+    }
+
+    .ph-device{
+      min-height:170px;
+      padding:14px;
+      background:linear-gradient(180deg,#f4f8e9,#e9f2d5);
+      border-radius:28px;
+      box-shadow:inset 0 0 0 6px #2d4135;
+    }
+
+    .ph-device .screen{
+      height:100%;
+      border-radius:20px;
+      background:linear-gradient(180deg,#fff8eb,#f7f3df);
+      padding:14px;
+      display:grid;
+      gap:10px;
+    }
+
+    .mini-grid{
+      display:grid;
+      gap:12px;
+    }
+
+    .grid-2{grid-template-columns:1fr 1fr}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-side{grid-template-columns:260px 1fr}
+    .grid-phone{grid-template-columns:.92fr 1.08fr}
+
+    .stack{display:grid;gap:10px}
+
+    .module-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .module{
+      padding:12px;
+      border-radius:16px;
+      background:#fffdf7;
+      border:1px solid rgba(217,200,168,.72);
+      min-height:92px;
+      display:grid;
+      align-content:start;
+      gap:8px;
+    }
+
+    .module .icon{
+      width:30px;
+      height:30px;
+      border-radius:10px;
+      background:rgba(25,200,185,.14);
+    }
+
+    .passport{
+      padding:14px;
+      display:grid;
+      gap:10px;
+      align-content:start;
+    }
+
+    .avatar{
+      width:70px;
+      height:70px;
+      border-radius:24px;
+      background:rgba(229,146,102,.18);
+      border:1px solid rgba(217,200,168,.72);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#9d6547;
+      font-size:22px;
+    }
+
+    .board{
+      padding:14px;
+      display:grid;
+      gap:10px;
+    }
+
+    .step-list{
+      display:grid;
+      gap:12px;
+      position:relative;
+      padding-left:46px;
+    }
+
+    .step-list::before{
+      content:"";
+      position:absolute;
+      left:20px;
+      top:18px;
+      bottom:18px;
+      width:4px;
+      border-radius:999px;
+      background:rgba(25,200,185,.18);
+    }
+
+    .step{
+      position:relative;
+      padding:12px 12px 12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(217,200,168,.72);
+      background:#fffdf7;
+      display:grid;
+      gap:8px;
+    }
+
+    .step::before{
+      content:attr(data-step);
+      position:absolute;
+      left:-38px;
+      top:12px;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--mint);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font:900 12px/1 "Nunito",sans-serif;
+    }
+
+    .ticket-row{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .ticket{
+      min-height:110px;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid rgba(217,200,168,.72);
+      background:#fffdf7;
+      display:grid;
+      gap:8px;
+    }
+
+    .letter{
+      display:grid;
+      gap:12px;
+    }
+
+    .letter-head{
+      padding:14px;
+      border-radius:18px;
+      background:rgba(229,146,102,.12);
+      border:1px solid rgba(217,200,168,.72);
+      display:grid;
+      gap:8px;
+    }
+
+    .letter-body{
+      display:grid;
+      gap:10px;
+    }
+
+    .catalog{
+      display:grid;
+      grid-template-columns:1fr 1.05fr;
+      gap:12px;
+    }
+
+    .catalog-list,.catalog-detail{
+      display:grid;
+      gap:10px;
+    }
+
+    .system-board{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:12px;
+      align-items:start;
+    }
+
+    .system-phone{
+      padding:14px;
+      border-radius:30px;
+      background:linear-gradient(180deg,#eef5df,#dfedd2);
+      box-shadow:inset 0 0 0 6px #334a3a;
+      min-height:220px;
+    }
+
+    .system-screen{
+      height:100%;
+      border-radius:22px;
+      background:linear-gradient(180deg,#fffef8,#f8f2df);
+      padding:14px;
+      display:grid;
+      gap:12px;
+    }
+
+    .system-kicker{
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(25,200,185,.12);
+      color:var(--mint);
+      font:800 10px/1 "Nunito",sans-serif;
+      width:max-content;
+    }
+
+    .system-tiles{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .app-tile{
+      padding:10px;
+      border-radius:18px;
+      background:#fff;
+      border:1.5px solid rgba(215,199,171,.72);
+      display:grid;
+      gap:8px;
+    }
+
+    .tile-head{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .tile-icon{
+      width:38px;
+      height:38px;
+      border-radius:14px;
+      background:linear-gradient(180deg,#8de1cb,#19C8B9);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.44);
+      flex:0 0 auto;
+    }
+
+    .tile-icon img{
+      width:20px;
+      height:20px;
+      object-fit:contain;
+    }
+
+    .tile-copy{
+      display:grid;
+      gap:4px;
+      min-width:0;
+    }
+
+    .tile-title{
+      color:var(--wood);
+      font:900 12px/1 "Nunito",sans-serif;
+    }
+
+    .tile-sub{
+      color:var(--muted);
+      font:700 10px/1 "Nunito",sans-serif;
+    }
+
+    .tile-badge{
+      width:max-content;
+      padding:6px 9px;
+      border-radius:999px;
+      background:rgba(247,205,103,.2);
+      color:var(--wood);
+      font:800 10px/1 "Nunito",sans-serif;
+    }
+
+    .stack-side{
+      display:grid;
+      gap:10px;
+    }
+
+    .meter-card{
+      padding:14px;
+      border-radius:22px;
+      background:linear-gradient(180deg,#fffef8,#fff7ea);
+      border:1.5px solid rgba(215,199,171,.72);
+      display:grid;
+      gap:10px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .meter-card::after{
+      content:"";
+      position:absolute;
+      right:-16px;
+      top:-16px;
+      width:82px;
+      height:82px;
+      border-radius:50%;
+      background:rgba(247,205,103,.16);
+    }
+
+    .meter-head{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      position:relative;
+      z-index:1;
+      color:var(--wood);
+      font:900 12px/1 "Nunito",sans-serif;
+    }
+
+    .meter-bar{
+      position:relative;
+      z-index:1;
+      height:10px;
+      border-radius:999px;
+      background:#efe6cb;
+      overflow:hidden;
+    }
+
+    .meter-fill{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,#19C8B9,#8de1cb);
+    }
+
+    .mini-tags{
+      position:relative;
+      z-index:1;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .mini-tags span{
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid rgba(215,199,171,.72);
+      background:#fff;
+      color:var(--muted);
+      font:800 10px/1 "Nunito",sans-serif;
+    }
+
+    .status-list{
+      display:grid;
+      gap:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .status-item{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius:16px;
+      background:#fff;
+      border:1.5px solid rgba(215,199,171,.72);
+    }
+
+    .status-item strong{
+      color:var(--wood);
+      font:900 12px/1 "Nunito",sans-serif;
+      display:block;
+    }
+
+    .status-item small{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font:700 10px/1.4 "Nunito",sans-serif;
+    }
+
+    .status-badge{
+      padding:7px 10px;
+      border-radius:999px;
+      font:800 10px/1 "Nunito",sans-serif;
+      background:rgba(25,200,185,.12);
+      color:var(--mint);
+    }
+
+    .status-badge.sun{
+      background:rgba(247,205,103,.24);
+      color:var(--wood);
+    }
+
+    .index-wrap{
+      display:grid;
+      grid-template-columns:160px 1fr;
+      gap:14px;
+    }
+
+    .index-nav{
+      padding:12px;
+      border-radius:18px;
+      border:1px solid rgba(217,200,168,.72);
+      background:#fffdf7;
+      display:grid;
+      gap:8px;
+    }
+
+    .index-nav .item{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font:800 12px/1 "Nunito",sans-serif;
+    }
+
+    .index-nav .item .n{
+      color:var(--mint);
+      min-width:18px;
+    }
+
+    .index-main{
+      display:grid;
+      gap:10px;
+    }
+
+    .tri-bar{
+      height:6px;
+      display:flex;
+    }
+
+    .tri-bar span:nth-child(1){flex:3;background:var(--mint)}
+    .tri-bar span:nth-child(2){flex:2;background:var(--sun)}
+    .tri-bar span:nth-child(3){flex:1;background:var(--orange)}
+
+    @media (max-width:820px){
+      .grid-2,.grid-3,.grid-side,.grid-phone,.catalog,.index-wrap,.module-grid,.ticket-row,.system-board,.system-tiles{
+        grid-template-columns:1fr;
+      }
+      .top-nav h1 span{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="tri-bar"><span></span><span></span><span></span></div>
+
+  <nav class="top-nav">
+    <h1>Layout Playground<span>· Ayu 小岛布局预览</span></h1>
+  </nav>
+
+  <div class="page-container">
+    <section class="hero-card">
+      <div class="hero-kicker">LAYOUT PREVIEW</div>
+      <h2>参考 Esther 的浏览方式，换成阿鱼自己的系统骨架</h2>
+      <p>这页保留了 Esther 那种“布局目录 + mini preview”的看法方式，但视觉、语气、组件语义已经换成 Ayu 当前确认的小岛系统。重点是更像森林里的原生界面、公告板、护照页、图鉴页，而不是编辑设计网页。</p>
+      <div class="hero-tags">
+        <span>NookPhone 氛围</span>
+        <span>森林绿叶片背景</span>
+        <span>暖米纸张内容层</span>
+        <span>animal-island-ui 语汇</span>
+      </div>
+    </section>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">01</span>NookPhone Hero</h3></div>
+      <div class="layout-copy">一边是角色和欢迎语，一边是手机系统主面板，适合 App 首页和系统入口页。</div>
+      <div class="preview-box">
+        <div class="mini-grid grid-phone">
+          <div class="passport ph-card">
+            <div class="ph-pill">WELCOME</div>
+            <div class="avatar">🐟</div>
+            <div class="ph-line medium"></div>
+            <div class="ph-line long"></div>
+            <div class="ph-note">今日状态 / 收藏偏好 / 小称号</div>
+          </div>
+          <div class="ph-device">
+            <div class="screen">
+              <div class="module-grid">
+                <div class="module"><div class="icon"></div><div class="ph-line short"></div></div>
+                <div class="module"><div class="icon" style="background:rgba(247,205,103,.22)"></div><div class="ph-line short"></div></div>
+                <div class="module"><div class="icon" style="background:rgba(229,146,102,.18)"></div><div class="ph-line short"></div></div>
+              </div>
+              <div class="ph-note">系统入口 / 图鉴 / 任务板</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-tag">App 首页、个人入口页、功能首页</div>
+    </div>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">02</span>Leaf Board Banner</h3></div>
+      <div class="layout-copy">像挂在小岛上的欢迎布告板，适合 landing 首屏、活动公告和主页引导。</div>
+      <div class="preview-box">
+        <div class="board ph-card">
+          <div class="mini-grid grid-2">
+            <div class="stack">
+              <div class="ph-pill">ISLAND NOTICE</div>
+              <div class="ph-line medium"></div>
+              <div class="ph-line long"></div>
+              <div class="ph-line short"></div>
+            </div>
+            <div class="mini-grid grid-2">
+              <div class="ph-stamp">贴纸</div>
+              <div class="ph-photo">欢迎插图</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-tag">landing 首屏、欢迎页、公告页</div>
+    </div>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">03</span>Passport Split</h3></div>
+      <div class="layout-copy">左边像护照侧栏，右边是角色介绍和补充内容，适合 about 页和个人设定页。</div>
+      <div class="preview-box">
+        <div class="mini-grid grid-side">
+          <div class="passport ph-card">
+            <div class="avatar">🪪</div>
+            <div class="ph-line short"></div>
+            <div class="ph-line medium"></div>
+            <div class="ph-note">昵称 / 称号 / 岛民编号</div>
+          </div>
+          <div class="stack">
+            <div class="board ph-card">
+              <div class="ph-line medium"></div>
+              <div class="ph-line long"></div>
+              <div class="ph-line long"></div>
+            </div>
+            <div class="ticket-row">
+              <div class="ticket"><div class="ph-stamp">爱好</div><div class="ph-line short"></div></div>
+              <div class="ticket"><div class="ph-stamp">收藏</div><div class="ph-line short"></div></div>
+              <div class="ticket"><div class="ph-stamp">技能</div><div class="ph-line short"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-tag">关于页、角色介绍、个人设定页</div>
+    </div>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">04</span>Bulletin Stack</h3></div>
+      <div class="layout-copy">把长内容拆成一块块便签和公告，不再像文档站一整条往下灌。</div>
+      <div class="preview-box">
+        <div class="stack">
+          <div class="board ph-card">
+            <div class="ph-pill">NOTICE 01</div>
+            <div class="ph-line medium"></div>
+            <div class="ph-line long"></div>
+          </div>
+          <div class="ph-note">
+            <div class="ph-line short"></div>
+            <div class="ph-line long" style="margin-top:8px"></div>
+          </div>
+          <div class="board ph-card">
+            <div class="ph-pill" style="background:rgba(229,146,102,.14);color:#9d6547">NOTICE 02</div>
+            <div class="ph-line medium"></div>
+            <div class="ph-line long"></div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-tag">教程页、知识页、长内容阅读页</div>
+    </div>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">05</span>Module Grid</h3></div>
+      <div class="layout-copy">功能入口不只是重复卡片，而是像不同职责的原生系统模块。</div>
+      <div class="preview-box">
+        <div class="module-grid">
+          <div class="module"><div class="icon"></div><div class="ph-line short"></div><div class="ph-line medium"></div></div>
+          <div class="module"><div class="icon" style="background:rgba(247,205,103,.22)"></div><div class="ph-line short"></div><div class="ph-line medium"></div></div>
+          <div class="module"><div class="icon" style="background:rgba(229,146,102,.18)"></div><div class="ph-line short"></div><div class="ph-line medium"></div></div>
+        </div>
+      </div>
+      <div class="scene-tag">功能入口、组件总览、分区导航</div>
+    </div>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">06</span>Collectible Shelf</h3></div>
+      <div class="layout-copy">更像收藏册和图鉴架，而不是网页卡片墙。</div>
+      <div class="preview-box">
+        <div class="mini-grid grid-2">
+          <div class="stack">
+            <div class="ph-photo">Collectible Card</div>
+            <div class="ph-note"><div class="ph-line medium"></div></div>
+          </div>
+          <div class="stack">
+            <div class="board ph-card">
+              <div class="ph-pill">CATALOG</div>
+              <div class="ph-line medium"></div>
+              <div class="ph-line short"></div>
+            </div>
+            <div class="ph-photo" style="background:rgba(229,146,102,.14);color:#9d6547">角色条目</div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-tag">图鉴页、小红书卡片、收藏展示页</div>
+    </div>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">07</span>Guide Path Steps</h3></div>
+      <div class="layout-copy">把教程做成任务链，比企业流程图更像游戏里的引导系统。</div>
+      <div class="preview-box">
+        <div class="step-list">
+          <div class="step" data-step="1"><div class="ph-line short"></div><div class="ph-line long"></div></div>
+          <div class="step" data-step="2"><div class="ph-line short"></div><div class="ph-line medium"></div></div>
+          <div class="step" data-step="3"><div class="ph-line short"></div><div class="ph-line long"></div></div>
+        </div>
+      </div>
+      <div class="scene-tag">安装流程、新手教学、任务说明</div>
+    </div>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">08</span>Board + Sidebar</h3></div>
+      <div class="layout-copy">左边像目录贴纸栏，右边是正文面板，更适合知识型页面。</div>
+      <div class="preview-box">
+        <div class="index-wrap">
+          <div class="index-nav">
+            <div class="item"><span class="n">01</span>欢迎</div>
+            <div class="item"><span class="n">02</span>步骤</div>
+            <div class="item"><span class="n">03</span>提醒</div>
+          </div>
+          <div class="index-main">
+            <div class="board ph-card">
+              <div class="ph-line medium"></div>
+              <div class="ph-line long"></div>
+            </div>
+            <div class="ph-note">
+              <div class="ph-line short"></div>
+              <div class="ph-line medium" style="margin-top:8px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-tag">教程索引、知识看板、长页导航</div>
+    </div>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">09</span>Status Dashboard</h3></div>
+      <div class="layout-copy">像原生系统里的状态页，不是 Web dashboard 的冷面板。</div>
+      <div class="preview-box">
+        <div class="stack">
+          <div class="board ph-card">
+            <div class="mini-grid grid-2">
+              <div class="stack">
+                <div class="ph-pill">TODAY</div>
+                <div class="ph-line medium"></div>
+              </div>
+              <div class="ph-note">今日状态 / 体力 / 进度</div>
+            </div>
+          </div>
+          <div class="mini-grid grid-2">
+            <div class="module"><div class="icon"></div><div class="ph-line short"></div><div class="ph-line medium"></div></div>
+            <div class="module"><div class="icon" style="background:rgba(229,146,102,.18)"></div><div class="ph-line short"></div><div class="ph-line medium"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-tag">任务页、状态板、功能面板页</div>
+    </div>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">10</span>Long Letter</h3></div>
+      <div class="layout-copy">公众号和长阅读页更像小岛来信，不再是杂志排版编号风。</div>
+      <div class="preview-box">
+        <div class="letter">
+          <div class="letter-head">
+            <div class="ph-pill">FROM AYU</div>
+            <div class="ph-line medium"></div>
+            <div class="ph-line short"></div>
+          </div>
+          <div class="letter-body">
+            <div class="board ph-card">
+              <div class="ph-line long"></div>
+              <div class="ph-line long"></div>
+              <div class="ph-line medium"></div>
+            </div>
+            <div class="ph-note">
+              <div class="ph-line short"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-tag">公众号排版、长文页、品牌发信页</div>
+    </div>
+
+    <div class="layout-block">
+      <div class="layout-header"><h3><span class="num">11</span>Catalog + Detail</h3></div>
+      <div class="layout-copy">左边条目列表，右边更大的详情卡，适合图鉴和资料页。</div>
+      <div class="preview-box">
+        <div class="catalog">
+          <div class="catalog-list">
+            <div class="module"><div class="icon"></div><div class="ph-line short"></div></div>
+            <div class="module"><div class="icon" style="background:rgba(247,205,103,.22)"></div><div class="ph-line short"></div></div>
+            <div class="module"><div class="icon" style="background:rgba(229,146,102,.18)"></div><div class="ph-line short"></div></div>
+          </div>
+          <div class="catalog-detail">
+            <div class="ph-photo" style="min-height:122px">Detail Card</div>
+            <div class="board ph-card">
+              <div class="ph-line medium"></div>
+              <div class="ph-line long"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-tag">图鉴详情、收藏条目、资料页</div>
+    </div>
+
+    <div class="layout-block" style="margin-bottom:0">
+      <div class="layout-header"><h3><span class="num">12</span>NookPhone Panel Mix</h3></div>
+      <div class="layout-copy">改成更贴近你参考 UI 系统的原生面板布局，用真实 icon tile、状态卡和内容分组来表达，而不是抽象漂浮便签。</div>
+      <div class="preview-box">
+        <div class="system-board">
+          <div class="system-phone">
+            <div class="system-screen">
+              <div class="system-kicker">NOOKPHONE BOARD</div>
+              <div class="system-tiles">
+                <article class="app-tile">
+                  <div class="tile-head">
+                    <div class="tile-icon"><img src="../../Documents/Codex/2026-07-02/ban-2/outputs/animal-island-icons/icon-critterpedia.2c4ac782.svg" alt=""></div>
+                    <div class="tile-copy"><span class="tile-title">Critterpedia</span><span class="tile-sub">图鉴入口</span></div>
+                  </div>
+                  <span class="tile-badge">知识 / 收藏</span>
+                </article>
+                <article class="app-tile">
+                  <div class="tile-head">
+                    <div class="tile-icon" style="background:linear-gradient(180deg,#ffe294,#F7CD67)"><img src="../../Documents/Codex/2026-07-02/ban-2/outputs/animal-island-icons/icon-design.5ac514dc.svg" alt=""></div>
+                    <div class="tile-copy"><span class="tile-title">Design</span><span class="tile-sub">页面入口</span></div>
+                  </div>
+                  <span class="tile-badge">模块 / 版式</span>
+                </article>
+                <article class="app-tile">
+                  <div class="tile-head">
+                    <div class="tile-icon" style="background:linear-gradient(180deg,#f1b28e,#E59266)"><img src="../../Documents/Codex/2026-07-02/ban-2/outputs/animal-island-icons/icon-miles.defd75be.svg" alt=""></div>
+                    <div class="tile-copy"><span class="tile-title">Miles</span><span class="tile-sub">进度状态</span></div>
+                  </div>
+                  <span class="tile-badge">任务 / 收集</span>
+                </article>
+                <article class="app-tile">
+                  <div class="tile-head">
+                    <div class="tile-icon"><img src="../../Documents/Codex/2026-07-02/ban-2/outputs/animal-island-icons/icon-map.9182b8ee.svg" alt=""></div>
+                    <div class="tile-copy"><span class="tile-title">Map</span><span class="tile-sub">导航入口</span></div>
+                  </div>
+                  <span class="tile-badge">地图 / 分区</span>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div class="stack-side">
+            <div class="meter-card">
+              <div class="meter-head"><span>Resident Status</span><span>72%</span></div>
+              <div class="meter-bar"><div class="meter-fill" style="width:72%"></div></div>
+              <div class="mini-tags"><span>Passport</span><span>Identity</span><span>Status</span></div>
+            </div>
+
+            <div class="meter-card">
+              <div class="status-list">
+                <div class="status-item">
+                  <div><strong>里程标记</strong><small>已收集、已完成、累计进度</small></div>
+                  <span class="status-badge">72%</span>
+                </div>
+                <div class="status-item">
+                  <div><strong>任务卡</strong><small>今日待办、阶段目标、提醒</small></div>
+                  <span class="status-badge sun">任务中</span>
+                </div>
+                <div class="status-item">
+                  <div><strong>状态卡</strong><small>角色状态、天气、能量值</small></div>
+                  <span class="status-badge">晴天</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scene-tag">App 面板页、系统首页、状态与入口混合页</div>
+    </div>
+  </div>
+
+  <div class="tri-bar"><span></span><span></span><span></span></div>
+
+  <!-- © ESTHER不二 esthersjw/esther-design-system CC BY-NC 4.0 -->
+</body>
+</html>

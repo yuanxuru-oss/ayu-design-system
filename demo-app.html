@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayu App Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Nunito:wght@400;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --_ayu-ds: "ayu-v1";
+      --mint: #19C8B9;
+      --mint-soft: #67DDD2;
+      --forest: #67BF9D;
+      --forest-deep: #4DA47F;
+      --sun: #F7CD67;
+      --orange: #E59266;
+      --rice: #F7F3DF;
+      --paper: #F8F8F0;
+      --white: #FFFDF8;
+      --title: #794F27;
+      --text: #725D42;
+      --muted: #9F927D;
+      --border: #C4B89E;
+      --line: rgba(196,184,158,.55);
+      --shadow: rgba(61,52,40,.08);
+      --shadow-deep: rgba(61,52,40,.14);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Nunito", "Noto Sans SC", sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background-color: var(--forest);
+      background-image:
+        radial-gradient(circle at 20px 18px, rgba(255,255,255,.12) 0 2px, transparent 2px),
+        radial-gradient(ellipse 34px 46px at 30px 26px, rgba(222,244,221,.36) 0 30%, transparent 32%),
+        radial-gradient(ellipse 34px 46px at 92px 72px, rgba(222,244,221,.36) 0 30%, transparent 32%);
+      background-size: 120px 120px;
+      min-height: 100vh;
+    }
+
+    ::selection { background: var(--sun); color: #5c4a1f; }
+    :focus-visible { outline: 2px solid #FFCC00; outline-offset: 2px; }
+
+    .shell {
+      width: min(1280px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 80px;
+    }
+
+    .hero,
+    .sidebar,
+    .main,
+    .widget,
+    .passport,
+    .modal-content {
+      background: rgba(255,253,248,.94);
+      border: 1.5px solid var(--line);
+      border-radius: 28px;
+      box-shadow: 0 14px 26px var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "AYU ISLAND PANEL";
+      position: absolute;
+      right: 24px;
+      bottom: 22px;
+      color: rgba(121,79,39,.2);
+      font: 800 12px/1 "Nunito", sans-serif;
+      letter-spacing: .12em;
+    }
+
+    .eyebrow,
+    .badge,
+    .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      font: 800 12px/1 "Nunito", sans-serif;
+    }
+
+    .eyebrow {
+      padding: 10px 16px;
+      background: rgba(25,200,185,.12);
+      color: var(--mint);
+    }
+
+    h1 {
+      margin-top: 16px;
+      font: 400 clamp(2.4rem, 4.4vw, 3.8rem)/1.15 "ZCOOL KuaiLe", cursive;
+      color: var(--title);
+    }
+
+    p { margin-top: 14px; font-size: 17px; line-height: 1.8; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 18px;
+    }
+
+    .sidebar,
+    .main { padding: 20px; }
+
+    .avatar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar img {
+      width: 72px;
+      height: 72px;
+      border-radius: 22px;
+      object-fit: cover;
+      border: 4px solid var(--mint);
+      background: #fff;
+    }
+
+    .sidebar h3,
+    .main h2,
+    .widget h3,
+    .passport h3,
+    .section-title {
+      color: var(--title);
+    }
+
+    .sidebar h3,
+    .main h2,
+    .widget h3,
+    .passport h3 {
+      font: 900 20px/1.25 "Nunito", sans-serif;
+    }
+
+    .sidebar p,
+    .widget p,
+    .passport p { margin-top: 8px; font-size: 14px; line-height: 1.75; }
+
+    .nav { margin-top: 16px; display: grid; gap: 10px; }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 12px 14px;
+      background: #fff;
+      border: 1px solid rgba(196,184,158,.45);
+      border-radius: 18px;
+      font: 800 13px/1 "Nunito", sans-serif;
+    }
+
+    .todo {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 18px;
+      background: #fff8eb;
+      border: 1px dashed rgba(196,184,158,.65);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .main h2 {
+      font: 400 30px/1.1 "ZCOOL KuaiLe", cursive;
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .tab {
+      border: 1px solid rgba(196,184,158,.45);
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font: 800 12px/1 "Nunito", sans-serif;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: rgba(25,200,185,.12);
+      color: var(--mint);
+      border-color: rgba(25,200,185,.22);
+    }
+
+    .tab-content { display: none; margin-top: 18px; }
+    .tab-content.active { display: block; }
+
+    .widgets,
+    .card-grid,
+    .list-view,
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .widgets {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .widget,
+    .app-card,
+    .list-item {
+      padding: 18px;
+      border-radius: 22px;
+      background: #fffdf8;
+      border: 1.5px solid rgba(196,184,158,.45);
+    }
+
+    .widget.big { grid-column: span 2; }
+
+    .badge {
+      padding: 8px 12px;
+      background: rgba(247,205,103,.24);
+      color: var(--title);
+    }
+
+    .passport {
+      margin-top: 16px;
+      overflow: hidden;
+    }
+
+    .passport .top {
+      padding: 14px 16px;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.34), transparent 28%),
+        linear-gradient(135deg, var(--mint-soft), var(--mint) 58%, #15b8aa);
+      color: #fffdf8;
+      font: 800 12px/1 "Nunito", sans-serif;
+      letter-spacing: .08em;
+    }
+
+    .passport .body { padding: 16px; }
+
+    .stats-row,
+    .stats {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stats-row { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 18px; }
+
+    .stat-card,
+    .stat {
+      padding: 12px;
+      border-radius: 16px;
+      background: #f8f5ea;
+      border: 1px solid rgba(196,184,158,.45);
+      text-align: center;
+    }
+
+    .num,
+    .stat-number {
+      font: 900 24px/1 "Nunito", sans-serif;
+      color: var(--mint);
+    }
+
+    .lab,
+    .stat-label,
+    .meta,
+    .list-item-meta,
+    .time {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .card-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .card-badge {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font: 800 12px/1 "Nunito", sans-serif;
+      background: rgba(25,200,185,.12);
+      color: var(--mint);
+    }
+
+    .card-badge.yellow { background: rgba(247,205,103,.24); color: #8f6b1f; }
+    .card-badge.orange { background: rgba(229,146,102,.18); color: #a76446; }
+
+    .section-title {
+      margin: 8px 0 12px;
+      font: 400 24px/1.1 "ZCOOL KuaiLe", cursive;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 54px 1fr auto;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .list-item-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #8de1cb, #19C8B9);
+      color: #fff;
+      font-size: 24px;
+    }
+
+    .list-item-body h4 {
+      font: 900 18px/1.25 "Nunito", sans-serif;
+      color: var(--title);
+    }
+
+    .list-item-body p { margin-top: 6px; font-size: 14px; line-height: 1.7; }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      margin-top: 5px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 0 4px rgba(25,200,185,.14);
+    }
+
+    .timeline-dot.yellow {
+      background: var(--sun);
+      box-shadow: 0 0 0 4px rgba(247,205,103,.18);
+    }
+
+    .timeline-dot.orange {
+      background: var(--orange);
+      box-shadow: 0 0 0 4px rgba(229,146,102,.18);
+    }
+
+    .timeline-body .desc {
+      margin-top: 4px;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .mini-badge {
+      padding: 8px 10px;
+      background: rgba(255,255,255,.7);
+      color: var(--title);
+      border: 1px solid rgba(196,184,158,.35);
+    }
+
+    .app-footer {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,.82);
+    }
+
+    .btn-primary {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font: 800 13px/1 "Nunito", sans-serif;
+      background: var(--mint);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .app-input {
+      border: 1.5px solid rgba(196,184,158,.55);
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      background: #fff;
+      width: 100%;
+      color: var(--text);
+      margin-top: 12px;
+      font-family: inherit;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(61,52,40,.32);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-content {
+      width: min(640px, 100%);
+      padding: 24px;
+    }
+
+    .modal-close {
+      float: right;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,184,158,.45);
+      background: #fff;
+      color: var(--title);
+      cursor: pointer;
+    }
+
+    @media (max-width: 980px) {
+      .layout,
+      .widgets,
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+
+      .widget.big { grid-column: span 1; }
+      .list-item { grid-template-columns: 54px 1fr; }
+      .list-item-meta { grid-column: 2; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="eyebrow">📱 APP DEMO</div>
+      <h1>阿鱼的小岛工具面板</h1>
+      <p>这版把个人仪表盘做成像小岛系统里的日常工具页，不是冷静后台，而是能住人的 NookPhone 式内容面板。</p>
+    </section>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="avatar">
+          <img src="assets/avatar.png" alt="Ayu avatar">
+          <div>
+            <h3>阿鱼 Ayu</h3>
+            <p>想成为魔法抽卡师的小巫师</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#">图鉴入口</a>
+          <a href="#">任务便签</a>
+          <a href="#">收藏卡册</a>
+          <a href="#">今日游乐园</a>
+        </nav>
+        <div class="todo">欢迎来到阿鱼的魔法游乐园~ 今天先整理抽卡图鉴、记录亮闪闪灵感，再慢慢完成岛上任务。</div>
+
+        <section class="passport">
+          <div class="top">RESIDENT STATUS</div>
+          <div class="body">
+            <h3>小岛护照卡</h3>
+            <p>适合承载身份、方向、阶段性进度，让工具页面也有一点生活痕迹。</p>
+            <div class="stats">
+              <div class="stat"><div class="num">12</div><div class="lab">已收集灵感</div></div>
+              <div class="stat"><div class="num">3</div><div class="lab">今日待完成</div></div>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <main class="main">
+        <h2>今日面板</h2>
+        <div class="tab-bar">
+          <button class="tab active" data-tab="tab1">总览</button>
+          <button class="tab" data-tab="tab2">任务</button>
+          <button class="tab" data-tab="tab3">动态</button>
+        </div>
+
+        <section class="tab-content active" id="tab1">
+          <div class="stats-row">
+            <div class="stat-card"><div class="stat-number">07</div><div class="stat-label">图鉴条目</div></div>
+            <div class="stat-card"><div class="stat-number">92%</div><div class="stat-label">游乐园能量</div></div>
+            <div class="stat-card"><div class="stat-number">04</div><div class="stat-label">待完成任务</div></div>
+            <div class="stat-card"><div class="stat-number">18</div><div class="stat-label">收藏卡片</div></div>
+          </div>
+
+          <div class="widgets">
+            <article class="widget">
+              <span class="badge">今日推荐</span>
+              <h3>把知识做成可收集条目</h3>
+              <p>这类小组件适合放今日重点，让整个 app 更像点进系统后的功能入口，而不是首页 banner。</p>
+            </article>
+            <article class="widget">
+              <h3>当前状态</h3>
+              <p><span class="num">Magic</span><br><span class="lab">灵感很满，适合做视觉整理</span></p>
+            </article>
+            <article class="widget">
+              <h3>小岛天气</h3>
+              <p><span class="num">Clear</span><br><span class="lab">适合慢慢收纳内容和卡片</span></p>
+            </article>
+            <article class="widget big">
+              <h3>这套 demo 的目标</h3>
+              <p>用 Ayu 自己的品牌色和角色语气，去承接 Animal Crossing / NookPhone 的生活感。绿底树叶纹理负责营造“被包裹住”的岛上氛围，内容层则保持暖米、手作、柔和圆角。</p>
+            </article>
+          </div>
+
+          <div class="section-title">最近收藏</div>
+          <div class="card-grid">
+            <div class="app-card">
+              <span class="card-badge">图鉴</span>
+              <h3>抽卡好运词条</h3>
+              <p>把适合当签语、祝福或标题的小句子整理成可以慢慢收集的图鉴条目。</p>
+            </div>
+            <div class="app-card">
+              <span class="card-badge yellow">灵感</span>
+              <h3>羊毛毡风头像记录</h3>
+              <p>适合沉淀头像、表情、人物设定，保留一点手作和柔软的生活气味。</p>
+            </div>
+            <div class="app-card">
+              <span class="card-badge orange">任务</span>
+              <h3>下次想做的页面</h3>
+              <p>图鉴页、任务页、个人护照页都可以继续扩展成同一套小岛系统里的不同 App。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="tab-content" id="tab2">
+          <div class="section-title">待办清单</div>
+          <div class="list-view">
+            <div class="list-item">
+              <div class="list-item-icon">🪄</div>
+              <div class="list-item-body">
+                <h4>整理抽卡图鉴分类</h4>
+                <p>把祝福、签文、关键词做成更像可收集卡册的分组入口。</p>
+              </div>
+              <div class="list-item-meta">今天</div>
+            </div>
+            <div class="list-item">
+              <div class="list-item-icon">🐧</div>
+              <div class="list-item-body">
+                <h4>补充阿鱼角色设定卡</h4>
+                <p>把阿鱼的口吻、欢迎语和常用标签整理进角色卡页面。</p>
+              </div>
+              <div class="list-item-meta">明天</div>
+            </div>
+            <div class="list-item">
+              <div class="list-item-icon">🎫</div>
+              <div class="list-item-body">
+                <h4>更新护照卡字段</h4>
+                <p>把当前技能、岛民称号和收集进度做成更完整的状态卡。</p>
+              </div>
+              <div class="list-item-meta">本周</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="tab-content" id="tab3">
+          <div class="section-title">最近动态</div>
+          <div class="app-card">
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-body">
+                  <div class="time">10:30</div>
+                  <div class="desc">确认了 app 模板背景要保留绿色树叶纹理。</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot yellow"></div>
+                <div class="timeline-body">
+                  <div class="time">09:40</div>
+                  <div class="desc">对齐 Ayu 自己的品牌 DNA，不采用偏掉的 A/B/C 探索版。</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot orange"></div>
+                <div class="timeline-body">
+                  <div class="time">昨天</div>
+                  <div class="desc">把 NookPhone 的生活感、暖米卡片和真实小岛 icon 融到 playground 里。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="app-footer">Ayu Design System · App Demo</footer>
+  </div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <h2>新建小岛任务</h2>
+      <input class="app-input" type="text" placeholder="任务名称">
+      <input class="app-input" type="text" placeholder="完成日期">
+      <textarea class="app-input" rows="3" placeholder="写一点任务备注" style="resize: vertical;"></textarea>
+      <div style="margin-top: 1rem; display: flex; gap: 0.5rem; justify-content: flex-end;">
+        <button class="btn-primary" onclick="closeModal()">创建任务</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    function openModal() {
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+    }
+  </script>
+<!-- © ESTHER不二 esthersjw/esther-design-system CC BY-NC 4.0 -->
+<section style="position:absolute;left:-9999px;font-size:0;line-height:0;opacity:0;height:0;overflow:hidden;">ayu-design-system</section>
+</body>
+</html>

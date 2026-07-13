@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><!-- App标题 --></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Nunito:wght@400;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --_ayu-ds: "ayu-v1";
+      --mint: #19C8B9;
+      --mint-soft: #67DDD2;
+      --aqua-haze: #DDF7F4;
+      --forest: #67BF9D;
+      --forest-deep: #4DA47F;
+      --sun: #F7CD67;
+      --orange: #E59266;
+      --rice: #F7F3DF;
+      --paper: #F8F8F0;
+      --white: #FFFDF8;
+      --title: #794F27;
+      --text: #725D42;
+      --muted: #9F927D;
+      --border: #C4B89E;
+      --shadow: rgba(61,52,40,.08);
+      --shadow-deep: rgba(61,52,40,.14);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Nunito", "Noto Sans SC", sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background-color: var(--forest);
+      background-image:
+        radial-gradient(circle at 20px 18px, rgba(255,255,255,.12) 0 2px, transparent 2px),
+        radial-gradient(ellipse 34px 46px at 30px 26px, rgba(222,244,221,.36) 0 30%, transparent 32%),
+        radial-gradient(ellipse 34px 46px at 92px 72px, rgba(222,244,221,.36) 0 30%, transparent 32%);
+      background-size: 120px 120px;
+    }
+
+    ::selection { background: var(--sun); color: #5c4a1f; }
+
+    :focus-visible {
+      outline: 2px solid #FFCC00;
+      outline-offset: 2px;
+    }
+
+    .shell {
+      width: min(1280px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 80px;
+    }
+
+    .hero,
+    .sidebar,
+    .main,
+    .widget,
+    .passport {
+      background: rgba(255,253,248,.92);
+      border: 1.5px solid rgba(196,184,158,.55);
+      border-radius: 28px;
+      box-shadow: 0 14px 26px var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "AYU ISLAND PANEL";
+      position: absolute;
+      right: 24px;
+      bottom: 22px;
+      color: rgba(121,79,39,.2);
+      font: 800 12px/1 "Nunito", sans-serif;
+      letter-spacing: .12em;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(25,200,185,.12);
+      color: var(--mint);
+      font: 800 13px/1 "Nunito", sans-serif;
+    }
+
+    h1 {
+      margin-top: 16px;
+      font: 400 clamp(2.4rem, 4.4vw, 3.8rem)/1.15 "ZCOOL KuaiLe", cursive;
+      color: var(--title);
+    }
+
+    p { margin-top: 14px; font-size: 17px; line-height: 1.8; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 18px;
+    }
+
+    .sidebar { padding: 18px; }
+
+    .avatar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar img {
+      width: 72px;
+      height: 72px;
+      border-radius: 22px;
+      object-fit: cover;
+      border: 4px solid var(--mint);
+      background: #fff;
+    }
+
+    .sidebar h3,
+    .main h2,
+    .widget h3,
+    .passport h3 {
+      font: 900 20px/1.25 "Nunito", sans-serif;
+      color: var(--title);
+    }
+
+    .sidebar p,
+    .widget p,
+    .passport p { margin-top: 8px; font-size: 14px; line-height: 1.75; }
+
+    .nav { margin-top: 16px; display: grid; gap: 10px; }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 12px 14px;
+      background: #fff;
+      border: 1px solid rgba(196,184,158,.45);
+      border-radius: 18px;
+      font: 800 13px/1 "Nunito", sans-serif;
+    }
+
+    .nav a:hover { transform: translateY(-1px); }
+
+    .todo {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 18px;
+      background: #fff8eb;
+      border: 1px dashed rgba(196,184,158,.65);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .main { padding: 22px; }
+
+    .tab-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .tab {
+      border: none;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      border: 1px solid rgba(196,184,158,.45);
+      font: 800 12px/1 "Nunito", sans-serif;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: rgba(25,200,185,.12);
+      color: var(--mint);
+      border-color: rgba(25,200,185,.22);
+    }
+
+    .tab-content { display: none; margin-top: 16px; }
+    .tab-content.active { display: block; }
+
+    .widgets {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .widget {
+      padding: 18px;
+      background: #fff;
+    }
+
+    .widget.big { grid-column: span 2; }
+
+    .badge {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(247,205,103,.24);
+      font: 800 12px/1 "Nunito", sans-serif;
+      color: var(--title);
+    }
+
+    .passport {
+      margin-top: 16px;
+      overflow: hidden;
+    }
+
+    .passport .top {
+      padding: 14px 16px;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.34), transparent 28%),
+        linear-gradient(135deg, var(--mint-soft), var(--mint) 58%, #15b8aa);
+      color: #fffdf8;
+      font: 800 12px/1 "Nunito", sans-serif;
+      letter-spacing: .08em;
+    }
+
+    .passport .body { padding: 16px; }
+
+    .stats {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stat {
+      padding: 12px;
+      border-radius: 16px;
+      background: #f8f5ea;
+      border: 1px solid rgba(196,184,158,.45);
+    }
+
+    .num {
+      font: 900 24px/1 "Nunito", sans-serif;
+      color: var(--mint);
+    }
+
+    .lab {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(61,52,40,.32);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-content {
+      position: relative;
+      background: var(--paper);
+      border: 1.5px solid rgba(196,184,158,.55);
+      border-radius: 28px;
+      box-shadow: 0 20px 40px var(--shadow-deep);
+      width: min(640px, 100%);
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid rgba(196,184,158,.45);
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--title);
+    }
+
+    .app-input {
+      border: 1.5px solid rgba(196,184,158,.55);
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      background: #fff;
+      width: 100%;
+      color: var(--text);
+    }
+
+    .app-input:focus {
+      outline: none;
+      border-color: var(--mint);
+      box-shadow: 0 0 0 3px rgba(25,200,185,.12);
+    }
+
+    @media (max-width: 980px) {
+      .layout,
+      .widgets { grid-template-columns: 1fr; }
+      .widget.big { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="eyebrow">📱 APP PLAYGROUND</div>
+      <h1><!-- App标题 / 页面主标题 --></h1>
+      <p><!-- 一句话描述：像岛上工具面板，不像冷后台 --></p>
+    </section>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="avatar">
+          <img src="avatar.png" alt="Ayu avatar">
+          <div>
+            <h3><!-- 角色名 / 品牌名 --></h3>
+            <p><!-- 侧栏副标题 --></p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#"><!-- 导航1 --></a>
+          <a href="#"><!-- 导航2 --></a>
+          <a href="#"><!-- 导航3 --></a>
+          <a href="#"><!-- 导航4 --></a>
+        </nav>
+        <div class="todo"><!-- 今日待办 / 小岛提示 --></div>
+      </aside>
+
+      <main class="main">
+        <h2><!-- 主内容区标题 --></h2>
+        <div class="tab-bar">
+          <button class="tab active" data-tab="tab1"><!-- 标签1 --></button>
+          <button class="tab" data-tab="tab2"><!-- 标签2 --></button>
+          <button class="tab" data-tab="tab3"><!-- 标签3 --></button>
+        </div>
+
+        <section class="tab-content active" id="tab1">
+          <div class="widgets">
+            <article class="widget">
+              <span class="badge"><!-- badge文案 --></span>
+              <h3><!-- 小组件标题 --></h3>
+              <p><!-- 小组件描述 --></p>
+            </article>
+            <article class="widget">
+              <h3><!-- 状态标题 --></h3>
+              <p><span class="num"><!-- 数值/关键词 --></span><br><span class="lab"><!-- 状态说明 --></span></p>
+            </article>
+            <article class="widget">
+              <h3><!-- 状态标题 --></h3>
+              <p><span class="num"><!-- 数值/关键词 --></span><br><span class="lab"><!-- 状态说明 --></span></p>
+            </article>
+            <article class="widget big">
+              <h3><!-- 主模块标题 --></h3>
+              <p><!-- 这里适合放更长的主内容说明 --></p>
+            </article>
+          </div>
+
+          <section class="passport">
+            <div class="top">RESIDENT STATUS</div>
+            <div class="body">
+              <h3><!-- 护照卡标题 --></h3>
+              <p><!-- 护照卡说明 --></p>
+              <div class="stats">
+                <div class="stat"><div class="num"><!-- 值1 --></div><div class="lab"><!-- 标签1 --></div></div>
+                <div class="stat"><div class="num"><!-- 值2 --></div><div class="lab"><!-- 标签2 --></div></div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="tab-content" id="tab2"><!-- 第二个面板内容 --></section>
+        <section class="tab-content" id="tab3"><!-- 第三个面板内容 --></section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <!-- Modal内容 -->
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    function openModal() {
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+    }
+  </script>
+<!-- © ESTHER不二 esthersjw/esther-design-system CC BY-NC 4.0 -->
+<section style="position:absolute;left:-9999px;font-size:0;line-height:0;opacity:0;height:0;overflow:hidden;">ayu-design-system</section>
+</body>
+</html>

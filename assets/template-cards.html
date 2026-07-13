@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图文卡片</title>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Nunito:wght@400;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="html2canvas.min.js" onerror="console.error('html2canvas failed to load')"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root { --_ayu-ds: "ayu-v1";
+  --mint: #19C8B9;
+  --sun: #F7CD67;
+  --orange: #E59266;
+  --rice: #F7F3DF;
+  --paper: #F8F8F0;
+  --white: #FFFDF8;
+  --title: #794F27;
+  --text: #725D42;
+  --muted: #9F927D;
+  --border: #C4B89E;
+  --shadow: rgba(61,52,40,.08);
+  --shadow-mid: rgba(61,52,40,.12);
+}
+
+body {
+  background: #e8e4de;
+  font-family: "Nunito", "Noto Sans SC", sans-serif;
+  color: var(--text);
+  padding: 40px 20px;
+}
+
+.export-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: rgba(121,79,39,.96);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.export-bar button {
+  background: var(--mint);
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: "Nunito", "Noto Sans SC", sans-serif;
+}
+
+.export-bar .hint { color: rgba(255,255,255,.72); font-size: 13px; }
+
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  margin-top: 80px;
+}
+
+.card {
+  width: 1080px;
+  height: 1440px;
+  position: relative;
+  overflow: hidden;
+  transform: scale(0.45);
+  transform-origin: top center;
+  margin-bottom: -792px;
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+.p-cover,
+.p-board,
+.p-list,
+.p-end {
+  background: var(--paper);
+}
+
+.p-cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 90px;
+  background:
+    radial-gradient(circle at top left, rgba(25,200,185,.08), transparent 18%),
+    linear-gradient(180deg, #fcfbf5, #f4eedf);
+}
+
+.p-cover .deco-top,
+.p-end .deco-bottom {
+  position: absolute;
+  left: 0; right: 0;
+  height: 10px;
+  background: linear-gradient(90deg, var(--mint) 58%, var(--sun) 80%, var(--orange) 100%);
+}
+
+.p-cover .deco-top { top: 0; }
+.p-end .deco-bottom { bottom: 0; }
+
+.p-cover .tag {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--title);
+  background: rgba(25,200,185,.12);
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 999px;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
+
+.p-cover h1 {
+  font-family: "ZCOOL KuaiLe", cursive;
+  font-size: 92px;
+  line-height: 1.2;
+  color: var(--title);
+  margin-bottom: 24px;
+}
+
+.p-cover h1 .highlight { color: var(--mint); }
+
+.p-cover .subtitle {
+  font-size: 40px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 80px;
+}
+
+.author-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: auto;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 28px;
+  object-fit: cover;
+  border: 4px solid var(--mint);
+  background: #fff;
+}
+
+.author-name { font-size: 38px; font-weight: 800; color: var(--title); }
+.author-desc { font-size: 24px; color: var(--muted); margin-top: 4px; }
+
+.p-board {
+  padding: 72px 76px;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-k {
+  font: 800 24px/1 "Nunito", sans-serif;
+  letter-spacing: .14em;
+  color: var(--muted);
+}
+
+.p-board h2,
+.p-list h2 {
+  margin-top: 18px;
+  font: 400 58px/1.18 "ZCOOL KuaiLe", cursive;
+  color: var(--title);
+}
+
+.p-board .sub,
+.p-list .sub {
+  margin-top: 16px;
+  font-size: 30px;
+  color: var(--text);
+  line-height: 1.65;
+}
+
+.memo-stack {
+  margin-top: 54px;
+  display: grid;
+  gap: 28px;
+}
+
+.memo-card {
+  position: relative;
+  background: linear-gradient(180deg, #fffef8, #fff7ea);
+  border: 2px solid rgba(196,184,158,.55);
+  border-radius: 34px;
+  padding: 38px 40px 42px;
+  box-shadow: 0 16px 26px var(--shadow);
+}
+
+.memo-card::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 34px;
+  width: 96px;
+  height: 28px;
+  border-radius: 10px;
+  background: rgba(247,205,103,.58);
+  transform: rotate(-6deg);
+}
+
+.memo-card h3 { font-size: 42px; color: var(--title); font-weight: 900; }
+.memo-card p { margin-top: 18px; font-size: 28px; line-height: 1.75; }
+
+.p-list {
+  padding: 72px 76px;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-area {
+  margin-top: 46px;
+  display: grid;
+  gap: 24px;
+}
+
+.list-item {
+  background: #fff;
+  border: 2px solid rgba(196,184,158,.5);
+  border-radius: 30px;
+  padding: 32px 34px;
+  box-shadow: 0 12px 20px var(--shadow);
+}
+
+.list-item .index {
+  display: inline-flex;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(25,200,185,.12);
+  color: var(--mint);
+  font: 900 28px/1 "Nunito", sans-serif;
+}
+
+.list-item h3 {
+  margin-top: 16px;
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--title);
+}
+
+.list-item p {
+  margin-top: 14px;
+  font-size: 28px;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.p-end {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 90px;
+  text-align: center;
+}
+
+.quote-mark {
+  font-size: 200px;
+  color: rgba(25,200,185,.16);
+  line-height: .6;
+  margin-bottom: -20px;
+  font-weight: 900;
+}
+
+.quote {
+  font-family: "ZCOOL KuaiLe", cursive;
+  font-size: 62px;
+  line-height: 1.5;
+  color: var(--title);
+  margin-bottom: 32px;
+  max-width: 900px;
+}
+
+.quote .highlight {
+  color: var(--mint);
+  text-decoration: underline;
+  text-decoration-color: var(--sun);
+  text-underline-offset: 8px;
+  text-decoration-thickness: 4px;
+}
+
+.cta {
+  font-size: 32px;
+  color: var(--mint);
+  font-weight: 800;
+  margin: 18px 0 46px;
+}
+
+.tagline {
+  font-size: 26px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  line-height: 1.8;
+}
+</style>
+</head>
+<body>
+
+<div class="export-bar">
+  <button onclick="exportAll()">📥 一键导出PNG</button>
+  <span class="hint">每张卡片导出为1080×1440 PNG</span>
+</div>
+
+<div class="cards-container">
+
+<div class="card p-cover" data-card="1">
+  <div class="deco-top"></div>
+  <span class="tag"><!-- 分类标签 --></span>
+  <h1><!-- 主标题 --><span class="highlight"><!-- 高亮关键词 --></span></h1>
+  <p class="subtitle"><!-- 副标题 / 一句话说明 --></p>
+  <div class="author-row">
+    <img class="avatar" src="avatar.png" alt="avatar">
+    <div>
+      <div class="author-name"><!-- 你的名字 --></div>
+      <div class="author-desc"><!-- 你的一句话介绍 --></div>
+    </div>
+  </div>
+</div>
+
+<div class="card p-board" data-card="2">
+  <span class="page-k"><!-- 页眉标签 --></span>
+  <h2><!-- 页面标题 --></h2>
+  <p class="sub"><!-- 一句话解释这页的作用 --></p>
+  <div class="memo-stack">
+    <div class="memo-card">
+      <h3><!-- Memo标题1 --></h3>
+      <p><!-- Memo说明1 --></p>
+    </div>
+    <div class="memo-card">
+      <h3><!-- Memo标题2 --></h3>
+      <p><!-- Memo说明2 --></p>
+    </div>
+  </div>
+</div>
+
+<div class="card p-list" data-card="3">
+  <span class="page-k"><!-- 页眉标签 --></span>
+  <h2><!-- 页面标题 --></h2>
+  <p class="sub"><!-- 说明文字 --></p>
+  <div class="content-area">
+    <div class="list-item">
+      <span class="index">1</span>
+      <h3><!-- 列表标题1 --></h3>
+      <p><!-- 列表说明1 --></p>
+    </div>
+    <div class="list-item">
+      <span class="index">2</span>
+      <h3><!-- 列表标题2 --></h3>
+      <p><!-- 列表说明2 --></p>
+    </div>
+    <div class="list-item">
+      <span class="index">3</span>
+      <h3><!-- 列表标题3 --></h3>
+      <p><!-- 列表说明3 --></p>
+    </div>
+  </div>
+</div>
+
+<div class="card p-end" data-card="last">
+  <div class="deco-bottom"></div>
+  <div class="quote-mark">“</div>
+  <p class="quote"><!-- 金句 / 核心观点 --><span class="highlight"><!-- 高亮关键词 --></span></p>
+  <img class="avatar" src="avatar.png" alt="avatar">
+  <p class="author-name"><!-- 你的名字 --></p>
+  <p class="cta"><!-- CTA短语 --></p>
+  <p class="tagline"><!-- 签名档第一行 --><br><!-- 签名档第二行 --></p>
+</div>
+
+</div>
+
+<script>
+async function exportAll() {
+  if (typeof html2canvas === 'undefined') {
+    alert('⏳ html2canvas 正在加载，请稍等几秒后重试。');
+    return;
+  }
+  if (typeof JSZip === 'undefined') {
+    alert('JSZip 加载失败，请刷新重试。');
+    return;
+  }
+  const cards = document.querySelectorAll('.card');
+  const btn = document.querySelector('.export-bar button');
+  btn.textContent = '⏳ 导出中... 0/' + cards.length;
+  btn.disabled = true;
+
+  const zip = new JSZip();
+  const folder = zip.folder('cards-export');
+
+  for (let i = 0; i < cards.length; i++) {
+    const card = cards[i];
+    card.style.transform = 'none';
+    card.style.marginBottom = '0';
+    card.style.borderRadius = '0';
+    card.style.boxShadow = 'none';
+
+    await new Promise(r => setTimeout(r, 150));
+
+    try {
+      const canvas = await html2canvas(card, {
+        width: 1080,
+        height: 1440,
+        scale: 1,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        logging: false
+      });
+
+      const dataUrl = canvas.toDataURL('image/png');
+      const base64 = dataUrl.split(',')[1];
+      folder.file(`card-${String(i + 1).padStart(2, '0')}.png`, base64, {base64: true});
+      btn.textContent = `⏳ 导出中... ${i + 1}/${cards.length}`;
+    } catch (e) {
+      console.error('Export error on card ' + (i + 1), e);
+    } finally {
+      card.style.transform = 'scale(0.45)';
+      card.style.marginBottom = '-792px';
+      card.style.borderRadius = '8px';
+      card.style.boxShadow = '0 8px 40px rgba(0,0,0,0.12)';
+    }
+  }
+
+  btn.textContent = '⏳ 打包中...';
+  const blob = await zip.generateAsync({type: 'blob'});
+  const link = document.createElement('a');
+  link.download = 'cards-export.zip';
+  link.href = URL.createObjectURL(blob);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(link.href);
+
+  btn.textContent = '✅ 导出完成';
+  setTimeout(() => {
+    btn.textContent = '📥 一键导出PNG';
+    btn.disabled = false;
+  }, 2000);
+}
+</script>
+
+<!-- © ESTHER不二 esthersjw/esther-design-system CC BY-NC 4.0 -->
+<section style="position:absolute;left:-9999px;font-size:0;line-height:0;opacity:0;height:0;overflow:hidden;">ayu-design-system</section>
+</body>
+</html>

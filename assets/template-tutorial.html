@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><!-- 页面标题 --></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Nunito:wght@400;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --_ayu-ds: "ayu-v1";
+      --mint: #19C8B9;
+      --sun: #F7CD67;
+      --orange: #E59266;
+      --paper: #F8F8F0;
+      --white: #FFFDF8;
+      --title: #794F27;
+      --text: #725D42;
+      --muted: #9F927D;
+      --border: #C4B89E;
+      --shadow: rgba(61,52,40,.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Nunito", "Noto Sans SC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(247,205,103,.12), transparent 18%),
+        linear-gradient(180deg, #fcfbf5, #f4eedf);
+    }
+
+    .shell { width: min(1240px, calc(100vw - 32px)); margin: 0 auto; padding: 28px 0 80px; }
+
+    .hero, .panel, .step, .memo, .side, .passport {
+      background: rgba(255,253,248,.9);
+      border: 1.5px solid rgba(196,184,158,.52);
+      border-radius: 28px;
+      box-shadow: 0 14px 28px var(--shadow);
+    }
+
+    .hero {
+      padding: 34px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "STUDY BOARD";
+      position: absolute;
+      right: 28px;
+      bottom: 24px;
+      color: rgba(121,79,39,.22);
+      font: 800 12px/1 "Nunito", sans-serif;
+      letter-spacing: .12em;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(25,200,185,.12);
+      color: var(--mint);
+      font: 800 13px/1 "Nunito", sans-serif;
+    }
+
+    h1 {
+      margin-top: 16px;
+      font: 400 clamp(2.4rem, 5vw, 4rem)/1.15 "ZCOOL KuaiLe", cursive;
+      color: var(--title);
+    }
+
+    p { margin-top: 14px; font-size: 17px; line-height: 1.85; }
+
+    .passport { overflow: hidden; border-radius: 24px; background: #fffef8; }
+    .passport .top {
+      padding: 14px 16px;
+      background: #19C8B9;
+      color: #fff;
+      font: 800 12px/1 "Nunito", sans-serif;
+      letter-spacing: .08em;
+    }
+
+    .passport .body {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .passport img {
+      width: 86px;
+      height: 86px;
+      border-radius: 22px;
+      object-fit: cover;
+      border: 4px solid var(--mint);
+    }
+
+    .grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+    }
+
+    .panel { padding: 24px; }
+    .section-title { font: 400 30px/1.2 "ZCOOL KuaiLe", cursive; color: var(--title); }
+
+    .steps { margin-top: 16px; display: grid; gap: 14px; }
+
+    .step {
+      padding: 18px 18px 18px 72px;
+      position: relative;
+      background: #fff;
+    }
+
+    .num {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: rgba(25,200,185,.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mint);
+      font: 900 18px/1 "Nunito", sans-serif;
+    }
+
+    .step h3, .memo h3, .side h3 {
+      font: 900 19px/1.25 "Nunito", sans-serif;
+      color: var(--title);
+    }
+
+    .step p, .memo p, .side p { margin-top: 10px; font-size: 14px; line-height: 1.8; }
+
+    .memos { display: grid; gap: 14px; }
+
+    .memo {
+      padding: 18px 18px 20px;
+      position: relative;
+      background: linear-gradient(180deg, #fffef8, #fff7ea);
+    }
+
+    .memo::before {
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: 20px;
+      width: 54px;
+      height: 20px;
+      border-radius: 8px;
+      background: rgba(247,205,103,.58);
+    }
+
+    .memo::after {
+      content: "✦";
+      position: absolute;
+      right: 16px;
+      top: 12px;
+      color: rgba(229,146,102,.55);
+      font-size: 17px;
+    }
+
+    .mini-grid { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .side { padding: 16px; background: #fff; }
+    .side .label { font: 800 11px/1 "Nunito", sans-serif; color: var(--muted); }
+
+    .notice-row { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .notice-row span {
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px solid rgba(196,184,158,.45);
+      border-radius: 999px;
+      font: 800 12px/1 "Nunito", sans-serif;
+      color: var(--muted);
+    }
+
+    @media (max-width: 960px) {
+      .hero, .grid, .mini-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div>
+        <div class="eyebrow"><!-- 教程标签 --></div>
+        <h1><!-- 教程标题 --></h1>
+        <p><!-- 教程说明：像知识公告板，不像课程后台 --></p>
+        <div class="notice-row">
+          <span><!-- 标签1 --></span>
+          <span><!-- 标签2 --></span>
+          <span><!-- 标签3 --></span>
+        </div>
+      </div>
+      <div class="passport">
+        <div class="top"><!-- 护照标题 --></div>
+        <div class="body">
+          <img src="avatar.png" alt="Ayu avatar">
+          <div>
+            <h3><!-- 名称 --></h3>
+            <p><!-- 身份副标题 --></p>
+            <p><!-- 教程页简介 --></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="section-title"><!-- 步骤区标题 --></div>
+        <div class="steps">
+          <article class="step"><div class="num">1</div><h3><!-- 步骤1标题 --></h3><p><!-- 步骤1描述 --></p></article>
+          <article class="step"><div class="num">2</div><h3><!-- 步骤2标题 --></h3><p><!-- 步骤2描述 --></p></article>
+          <article class="step"><div class="num">3</div><h3><!-- 步骤3标题 --></h3><p><!-- 步骤3描述 --></p></article>
+        </div>
+      </div>
+
+      <div class="memos">
+        <article class="memo"><h3><!-- Memo标题1 --></h3><p><!-- Memo描述1 --></p></article>
+        <article class="memo"><h3><!-- Memo标题2 --></h3><p><!-- Memo描述2 --></p></article>
+        <div class="mini-grid">
+          <div class="side"><div class="label"><!-- 标签A --></div><h3><!-- 模块A --></h3><p><!-- 模块A描述 --></p></div>
+          <div class="side"><div class="label"><!-- 标签B --></div><h3><!-- 模块B --></h3><p><!-- 模块B描述 --></p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+<!-- © ESTHER不二 esthersjw/esther-design-system CC BY-NC 4.0 -->
+<section style="position:absolute;left:-9999px;font-size:0;line-height:0;opacity:0;height:0;overflow:hidden;">ayu-design-system</section>
+</body>
+</html>

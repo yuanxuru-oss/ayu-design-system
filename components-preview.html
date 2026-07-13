@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayu UI Components Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Nunito:wght@400;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --forest:#67BF9D;
+      --mint:#19C8B9;
+      --sun:#F7CD67;
+      --orange:#E59266;
+      --paper:#F8F8F0;
+      --rice:#F7F3DF;
+      --white:#FFFDF8;
+      --title:#794F27;
+      --text:#725D42;
+      --muted:#9F927D;
+      --line:#D7C7AB;
+      --shadow:rgba(46,82,59,.18);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      padding:28px;
+      font-family:"Nunito","Noto Sans SC",sans-serif;
+      color:var(--text);
+      background-color:var(--forest);
+      background-image:
+        radial-gradient(circle at 20px 18px, rgba(255,255,255,.12) 0 2px, transparent 2px),
+        radial-gradient(ellipse 34px 46px at 30px 26px, rgba(222,244,221,.36) 0 30%, transparent 32%),
+        radial-gradient(ellipse 34px 46px at 92px 72px, rgba(222,244,221,.36) 0 30%, transparent 32%);
+      background-size:120px 120px;
+    }
+
+    .shell{max-width:1280px;margin:0 auto}
+    .hero,.section,.comp-card,.phone,.passport,.note,.chip-card,.showcase-passport,.showcase-collectible,.entry-family,.status-panel,.content-board,.library-shell,.library-card,.system-panel,.dock-panel,.app-tile{
+      background:rgba(255,248,236,.95);
+      border:1.5px solid rgba(231,214,178,.78);
+      box-shadow:0 18px 34px var(--shadow);
+    }
+
+    .hero{
+      border-radius:34px;
+      padding:28px 30px;
+    }
+
+    .eyebrow,.badge,.chip{
+      display:inline-flex;
+      align-items:center;
+      padding:9px 14px;
+      border-radius:999px;
+      font:800 12px/1 "Nunito",sans-serif;
+    }
+
+    .eyebrow{background:rgba(25,200,185,.12);color:var(--mint)}
+    .badge{background:rgba(247,205,103,.24);color:var(--title)}
+    .chip{background:#fff;border:1px solid rgba(215,199,171,.72);color:var(--muted)}
+
+    h1,h2{
+      font-family:"ZCOOL KuaiLe",cursive;
+      color:var(--title);
+      font-weight:400;
+    }
+
+    h1{margin-top:16px;font-size:clamp(2.5rem,5vw,4.2rem);line-height:1.08}
+    .hero p,.section-note,.comp-card p,.passport p,.note p,.chip-card p{
+      margin-top:12px;
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .hero p{max-width:62ch;font-size:17px}
+    .layout{margin-top:18px;display:grid;grid-template-columns:420px 1fr;gap:18px;align-items:start}
+
+    .phone{
+      border-radius:42px;
+      padding:18px;
+      background:linear-gradient(180deg,#fffaf0,#f3e5c5);
+      border:3px solid #e8d7b5;
+      box-shadow:0 12px 0 rgba(222,198,149,.8),0 28px 60px var(--shadow);
+    }
+
+    .screen{
+      min-height:820px;
+      border-radius:30px;
+      background:#f8f2e1;
+      overflow:hidden;
+      padding:18px;
+    }
+
+    .app-head{
+      padding:18px;
+      border-radius:24px;
+      background:linear-gradient(180deg,#7ad5b3,#19C8B9);
+      color:#fff;
+    }
+
+    .crumb{font:800 12px/1 "Nunito",sans-serif;letter-spacing:.08em}
+    .app-title{margin-top:12px;font:400 34px/1.08 "ZCOOL KuaiLe",cursive}
+    .app-sub{margin-top:8px;font-size:14px;line-height:1.7;max-width:25ch}
+
+    .stack{margin-top:16px;display:grid;gap:14px}
+    .comp-card{
+      border-radius:24px;
+      padding:16px;
+      background:#fffdf7;
+    }
+
+    .comp-card h3,.passport h3,.note h3,.chip-card h3,.showcase-passport h3,.showcase-collectible h3,.entry-family h3,.status-panel h3,.content-board h3{
+      margin-top:12px;
+      font:900 18px/1.25 "Nunito",sans-serif;
+      color:var(--title);
+    }
+
+    .module{
+      display:grid;
+      grid-template-columns:52px 1fr;
+      gap:12px;
+      align-items:start;
+      padding:15px 16px;
+      border-radius:20px;
+      background:#fff;
+      border:1.5px solid rgba(215,199,171,.72);
+    }
+
+    .icon{
+      width:52px;height:52px;border-radius:18px;
+      background:linear-gradient(180deg,#8de1cb,#19C8B9);
+      display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;
+    }
+    .icon::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 48%);
+    }
+    .icon img{
+      position:relative;z-index:1;
+      width:32px;height:32px;object-fit:contain;
+      filter:drop-shadow(0 2px 0 rgba(255,255,255,.16)) drop-shadow(0 4px 8px rgba(62,77,53,.18));
+    }
+
+    .section{
+      border-radius:32px;
+      padding:22px;
+    }
+
+    .section h2{font-size:30px;line-height:1.1}
+    .section-note{color:var(--muted)}
+    .grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .library-shell{
+      margin-top:18px;
+      border-radius:28px;
+      padding:18px;
+      background:linear-gradient(180deg,#fffef8,#f8f1de);
+    }
+
+    .library-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding-bottom:14px;
+    }
+
+    .library-kicker{
+      font:800 11px/1 "Nunito",sans-serif;
+      color:var(--mint);
+      letter-spacing:.08em;
+    }
+
+    .library-headline{
+      margin-top:8px;
+      font:400 24px/1.08 "ZCOOL KuaiLe",cursive;
+      color:var(--title);
+    }
+
+    .library-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      justify-content:flex-end;
+    }
+
+    .library-meta span{
+      padding:7px 10px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid rgba(215,199,171,.72);
+      color:var(--muted);
+      font:800 11px/1 "Nunito",sans-serif;
+    }
+
+    .library-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .library-card{
+      border-radius:22px;
+      padding:14px;
+      background:#fffdf8;
+    }
+
+    .library-card h4{
+      font:900 15px/1.2 "Nunito",sans-serif;
+      color:var(--title);
+    }
+
+    .library-card > p{
+      margin-top:8px;
+      font-size:12px;
+      line-height:1.6;
+      color:var(--muted);
+    }
+
+    .compact-passport{
+      margin-top:10px;
+      overflow:hidden;
+      border-radius:18px;
+      background:#fffef8;
+      border:1px solid rgba(215,199,171,.72);
+    }
+
+    .compact-passport .head{
+      display:flex;justify-content:space-between;
+      padding:9px 11px;
+      background:linear-gradient(180deg,#7ad5b3,#19C8B9);
+      color:#fff;
+      font:800 10px/1 "Nunito",sans-serif;
+      letter-spacing:.08em;
+    }
+
+    .compact-passport .body{
+      display:grid;
+      grid-template-columns:48px 1fr;
+      gap:10px;
+      padding:11px;
+    }
+
+    .compact-passport img{
+      width:48px;height:48px;border-radius:14px;object-fit:cover;
+      border:3px solid var(--mint);background:#fff;
+    }
+
+    .mini-entry{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:42px 1fr;
+      gap:10px;
+      align-items:start;
+      padding:10px;
+      border-radius:18px;
+      background:#fff;
+      border:1px solid rgba(215,199,171,.72);
+    }
+
+    .mini-entry-icon{
+      width:42px;height:42px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg,#8de1cb,#19C8B9);
+      position:relative;overflow:hidden;
+    }
+
+    .mini-entry-icon::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 48%);
+    }
+
+    .mini-entry-icon img{
+      width:24px;height:24px;position:relative;z-index:1;
+    }
+
+    .mini-memo{
+      margin-top:10px;
+      position:relative;
+      padding:12px;
+      border-radius:18px;
+      background:linear-gradient(180deg,#fffef8,#fff7ea);
+      border:1px solid rgba(215,199,171,.72);
+    }
+
+    .mini-memo::before{
+      content:"";
+      position:absolute;top:-7px;left:14px;
+      width:42px;height:14px;border-radius:7px;
+      background:rgba(247,205,103,.58);
+    }
+
+    .mini-collect{
+      margin-top:10px;
+      overflow:hidden;
+      border-radius:18px;
+      background:#fffef8;
+      border:1px solid rgba(215,199,171,.72);
+      transform:rotate(-.7deg);
+    }
+
+    .mini-collect .head{
+      padding:10px 12px;
+      background:linear-gradient(135deg,#ffe38d,var(--sun));
+      color:#8b6b22;
+      font:800 10px/1 "Nunito",sans-serif;
+      letter-spacing:.08em;
+    }
+
+    .mini-collect .body{
+      padding:12px;
+    }
+
+    .system-panel{
+      margin-top:18px;
+      border-radius:28px;
+      padding:18px;
+      background:linear-gradient(180deg,#fffef8,#f5ecd5);
+    }
+
+    .system-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding-bottom:14px;
+    }
+
+    .system-kicker{
+      font:800 11px/1 "Nunito",sans-serif;
+      color:var(--mint);
+      letter-spacing:.08em;
+    }
+
+    .system-title{
+      margin-top:8px;
+      font:400 24px/1.08 "ZCOOL KuaiLe",cursive;
+      color:var(--title);
+    }
+
+    .tab-strip{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .tab-strip span{
+      padding:8px 10px;
+      border-radius:999px;
+      font:800 11px/1 "Nunito",sans-serif;
+      background:#fff;
+      border:1px solid rgba(215,199,171,.72);
+      color:var(--muted);
+    }
+
+    .tab-strip span.active{
+      background:rgba(25,200,185,.12);
+      color:var(--mint);
+      border-color:rgba(25,200,185,.24);
+    }
+
+    .system-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:14px;
+    }
+
+    .dock-panel{
+      border-radius:24px;
+      padding:14px;
+      background:#fffdf8;
+    }
+
+    .dock-panel h4,
+    .app-tile h4{
+      font:900 15px/1.2 "Nunito",sans-serif;
+      color:var(--title);
+    }
+
+    .dock-panel p,
+    .app-tile p{
+      margin-top:6px;
+      font-size:12px;
+      line-height:1.6;
+      color:var(--muted);
+    }
+
+    .app-grid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+
+    .app-tile{
+      border-radius:18px;
+      padding:12px;
+      background:#fff;
+      border:1px solid rgba(215,199,171,.72);
+    }
+
+    .tile-head{
+      display:grid;
+      grid-template-columns:38px 1fr;
+      gap:10px;
+      align-items:center;
+    }
+
+    .tile-icon{
+      width:38px;height:38px;border-radius:13px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg,#8de1cb,#19C8B9);
+      position:relative;overflow:hidden;
+    }
+
+    .tile-icon::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 48%);
+    }
+
+    .tile-icon img{
+      width:22px;height:22px;position:relative;z-index:1;
+    }
+
+    .tile-badge{
+      display:inline-flex;
+      margin-top:8px;
+      padding:6px 9px;
+      border-radius:999px;
+      background:rgba(247,205,103,.22);
+      color:var(--title);
+      font:800 10px/1 "Nunito",sans-serif;
+    }
+
+    .stack-side{
+      display:grid;
+      gap:10px;
+    }
+
+    .meter-card{
+      border-radius:18px;
+      padding:12px;
+      background:#fff;
+      border:1px solid rgba(215,199,171,.72);
+    }
+
+    .meter-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font:800 12px/1.2 "Nunito",sans-serif;
+      color:var(--title);
+    }
+
+    .meter-bar{
+      margin-top:10px;
+      height:10px;
+      border-radius:999px;
+      background:#efe5cb;
+      overflow:hidden;
+    }
+
+    .meter-fill{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,#8de1cb,#19C8B9);
+    }
+
+    .mini-tags{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+    }
+
+    .mini-tags span{
+      padding:6px 8px;
+      border-radius:999px;
+      background:#fff8eb;
+      border:1px solid rgba(215,199,171,.72);
+      color:var(--muted);
+      font:800 10px/1 "Nunito",sans-serif;
+    }
+
+    .showcase-passport{
+      overflow:hidden;
+      border-radius:24px;
+      background:#fffef8;
+    }
+
+    .showcase-passport .mini-head{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px 14px;
+      background:linear-gradient(180deg,#7ad5b3,#19C8B9);
+      color:#fffdf8;
+      font:800 11px/1 "Nunito",sans-serif;
+      letter-spacing:.08em;
+    }
+
+    .showcase-passport .mini-body{
+      display:grid;
+      grid-template-columns:64px 1fr;
+      gap:12px;
+      padding:14px;
+    }
+
+    .showcase-passport .mini-body img{
+      width:64px;height:64px;border-radius:18px;object-fit:cover;
+      border:3px solid var(--mint);background:#fff;
+    }
+
+    .showcase-passport .meta{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:6px 10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .showcase-passport .meta b{
+      color:var(--title);
+      font-weight:800;
+    }
+
+    .entry-card{
+      padding:15px 16px;
+      border-radius:22px;
+      background:#fff;
+      border:1.5px solid rgba(215,199,171,.72);
+      display:grid;
+      grid-template-columns:54px 1fr;
+      gap:12px;
+      align-items:start;
+    }
+
+    .entry-card .entry-icon{
+      width:54px;height:54px;border-radius:18px;
+      background:linear-gradient(180deg,#8de1cb,#19C8B9);
+      display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;
+    }
+
+    .entry-card .entry-icon::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 48%);
+    }
+
+    .entry-card .entry-icon img{
+      position:relative;z-index:1;
+      width:32px;height:32px;object-fit:contain;
+    }
+
+    .entry-card .pills{
+      margin-top:10px;
+      display:flex;flex-wrap:wrap;gap:8px;
+    }
+
+    .entry-card .pills span{
+      padding:6px 10px;border-radius:999px;
+      background:rgba(247,205,103,.22);
+      color:var(--title);
+      font:800 11px/1 "Nunito",sans-serif;
+    }
+
+    .memo-showcase{
+      position:relative;
+      padding:18px;
+      border-radius:22px;
+      background:linear-gradient(180deg,#fffef8,#fff7ea);
+      border:1.5px solid rgba(215,199,171,.72);
+    }
+
+    .memo-showcase::before{
+      content:"";
+      position:absolute;top:-9px;left:20px;
+      width:56px;height:18px;border-radius:8px;
+      background:rgba(247,205,103,.58);
+    }
+
+    .memo-showcase::after{
+      content:"✦";
+      position:absolute;right:16px;top:12px;
+      color:rgba(229,146,102,.55);
+      font-size:17px;
+    }
+
+    .memo-lines{
+      margin-top:10px;
+      display:grid;
+      gap:8px;
+    }
+
+    .memo-lines span{
+      display:block;
+      height:10px;
+      border-radius:999px;
+      background:rgba(121,79,39,.08);
+    }
+
+    .memo-lines span:nth-child(1){width:88%}
+    .memo-lines span:nth-child(2){width:72%}
+    .memo-lines span:nth-child(3){width:58%}
+
+    .showcase-collectible{
+      border-radius:24px;
+      overflow:hidden;
+      transform:rotate(-1.2deg);
+      background:#fffef8;
+    }
+
+    .showcase-collectible .collect-head{
+      padding:13px 15px;
+      background:linear-gradient(135deg,#ffe38d,var(--sun));
+      color:#8b6b22;
+      font:800 11px/1 "Nunito",sans-serif;
+      letter-spacing:.08em;
+    }
+
+    .showcase-collectible .collect-body{
+      padding:16px;
+      background:linear-gradient(180deg,#fffef8,#fff8eb);
+    }
+
+    .collect-stamp{
+      display:inline-flex;
+      padding:7px 11px;
+      border-radius:999px;
+      background:rgba(25,200,185,.12);
+      color:var(--mint);
+      font:800 11px/1 "Nunito",sans-serif;
+    }
+
+    .collect-meta{
+      margin-top:12px;
+      display:flex;flex-wrap:wrap;gap:8px;
+    }
+
+    .collect-meta span{
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(215,199,171,.72);
+      background:#fff;
+      color:var(--muted);
+      font:800 11px/1 "Nunito",sans-serif;
+    }
+
+    .passport{
+      overflow:hidden;
+      border-radius:26px;
+      background:#fffef8;
+    }
+    .passport-head{
+      display:flex;justify-content:space-between;
+      padding:14px 16px;
+      background:linear-gradient(180deg,#7ad5b3,#19C8B9);
+      color:#fffdf8;
+      font:800 12px/1 "Nunito",sans-serif;
+      letter-spacing:.08em;
+    }
+    .passport-body{
+      display:grid;
+      grid-template-columns:84px 1fr;
+      gap:14px;
+      padding:16px;
+    }
+    .passport-body img{
+      width:84px;height:84px;border-radius:22px;object-fit:cover;
+      border:4px solid var(--mint);background:#fff;
+    }
+
+    .note{
+      position:relative;
+      border-radius:24px;
+      padding:18px;
+      background:linear-gradient(180deg,#fffef8,#fff8eb);
+    }
+    .note::before{
+      content:"";
+      position:absolute;top:-8px;left:20px;
+      width:52px;height:18px;border-radius:8px;
+      background:rgba(247,205,103,.58);
+    }
+
+    .chip-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+    .chip-card{
+      border-radius:22px;
+      padding:16px;
+      background:#fffdf7;
+    }
+    .chip-row{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
+
+    .entry-family{
+      border-radius:24px;
+      padding:16px;
+      background:#fffef8;
+    }
+
+    .entry-list{
+      margin-top:12px;
+      display:grid;
+      gap:10px;
+    }
+
+    .entry-pill{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:18px;
+      background:#fff;
+      border:1.5px solid rgba(215,199,171,.72);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .entry-pill .dot{
+      width:28px;height:28px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg,#8de1cb,#19C8B9);
+      color:#fff;font:800 11px/1 "Nunito",sans-serif;
+      flex:0 0 auto;
+    }
+
+    .status-panel{
+      border-radius:24px;
+      padding:16px;
+      background:linear-gradient(180deg,#fffef8,#fff8ed);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .status-panel::after{
+      content:"";
+      position:absolute;
+      right:-18px;top:-18px;
+      width:86px;height:86px;border-radius:50%;
+      background:rgba(247,205,103,.18);
+    }
+
+    .status-row{
+      margin-top:14px;
+      display:grid;
+      gap:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .status-item{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:11px 12px;
+      border-radius:18px;
+      background:#fff;
+      border:1.5px solid rgba(215,199,171,.72);
+    }
+
+    .status-item b{
+      color:var(--title);
+      font-size:13px;
+    }
+
+    .status-badge{
+      padding:7px 10px;
+      border-radius:999px;
+      font:800 11px/1 "Nunito",sans-serif;
+      background:rgba(25,200,185,.12);
+      color:var(--mint);
+    }
+
+    .status-badge.sun{
+      background:rgba(247,205,103,.24);
+      color:var(--title);
+    }
+
+    .content-board{
+      border-radius:24px;
+      padding:16px;
+      background:#fffdf7;
+      position:relative;
+    }
+
+    .content-board::before{
+      content:"";
+      position:absolute;
+      top:0;left:0;right:0;
+      height:6px;
+      border-radius:24px 24px 0 0;
+      background:linear-gradient(90deg,var(--mint),var(--sun),var(--orange));
+    }
+
+    .token-list{
+      margin-top:14px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .token-list span{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(215,199,171,.72);
+      background:#fff;
+      color:var(--muted);
+      font:800 11px/1 "Nunito",sans-serif;
+    }
+
+    @media (max-width:1100px){
+      .layout{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+      .library-grid{grid-template-columns:1fr}
+      .system-grid{grid-template-columns:1fr}
+      .chip-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="eyebrow">ANIMAL-ISLAND-UI BASED</div>
+      <h1>阿鱼的 UI 组件总览页</h1>
+      <p>这页不再沿用 Esther 那种杂志式 51 组件目录，而是基于 `animal-island-ui` 的 NookPhone 语汇来组织组件。重点不是“组件数量很多”，而是这套组件能不能自然组成阿鱼的小岛系统。</p>
+    </section>
+
+    <section class="layout">
+      <div class="phone">
+        <div class="screen">
+          <div class="app-head">
+            <div class="crumb">📱 AYU UI KIT</div>
+            <div class="app-title">小岛组件手机</div>
+            <div class="app-sub">用真实的 Animal Island icon 和 NookPhone 结构来展示这套 UI 的核心组件。</div>
+          </div>
+
+          <div class="stack">
+            <div class="module">
+              <div class="icon"><img src="animal-island-icons/icon-critterpedia.2c4ac782.svg" alt=""></div>
+              <div><h3>图鉴入口卡</h3><p>适合知识分类、条目入口、收藏目录，是这套系统最像游戏原生的导航组件。</p></div>
+            </div>
+            <div class="module">
+              <div class="icon" style="background:linear-gradient(180deg,#ffe294,#F7CD67)"><img src="animal-island-icons/icon-design.5ac514dc.svg" alt=""></div>
+              <div><h3>设计入口卡</h3><p>适合页面类型、视觉模块、玩法说明等更偏功能入口的内容。</p></div>
+            </div>
+            <div class="module">
+              <div class="icon" style="background:linear-gradient(180deg,#f1b28e,#E59266)"><img src="animal-island-icons/icon-miles.defd75be.svg" alt=""></div>
+              <div><h3>进度状态卡</h3><p>适合任务、收藏、完成度、阶段状态，让系统更像有收集机制的小岛工具。</p></div>
+            </div>
+            <div class="note">
+              <h3>为什么 UI 总览要改成这样</h3>
+              <p>因为你现在确认的整套视觉核心，不是“通用网页组件库”，而是“阿鱼的小岛系统组件”。所以总览方式也应该像手机内置 App 图鉴，而不是大而全的组件样品册。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>建议保留的核心 UI 组件</h2>
+        <div class="section-note">这里先展示四个核心组件的主样式，再进入更像“游戏手机原生组件面板”的系统视图，尽量贴近你想要的那种 UI 氛围。</div>
+
+        <div class="grid">
+          <article class="showcase-passport">
+            <div class="mini-head"><span>Core 01</span><span>PASSPORT CARD</span></div>
+            <div class="mini-body">
+              <img src="file:///C:/Users/Yoselin/.codex/skills/ayu-design-system/assets/avatar.png" alt="Ayu avatar">
+              <div>
+                <h3>Passport Card</h3>
+                <p>承接人物身份、品牌信息、状态字段，是最稳定也最有“岛上系统感”的身份组件。</p>
+                <div class="meta"><b>字段</b><span>名字 / 副标题 / 状态</span><b>场景</b><span>人物页 / 主页 / 教程页</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="entry-card">
+            <div class="entry-icon"><img src="animal-island-icons/icon-design.5ac514dc.svg" alt=""></div>
+            <div>
+              <span class="badge">Core 02</span>
+              <h3>Module Entry Card</h3>
+              <p>带真实 icon 的功能入口卡，适合 App 页面、导航页、知识入口页。</p>
+              <div class="pills"><span>功能入口</span><span>图鉴分类</span><span>导航模块</span></div>
+            </div>
+          </article>
+
+          <article class="memo-showcase">
+            <span class="badge">Core 03</span>
+            <h3>Memo Card</h3>
+            <p>适合灵感、提示、规则、便签说明，是生活感和手作感的重要来源。</p>
+            <div class="memo-lines"><span></span><span></span><span></span></div>
+          </article>
+
+          <article class="showcase-collectible">
+            <div class="collect-head">Core 04 · COLLECTIBLE</div>
+            <div class="collect-body">
+              <span class="collect-stamp">可收藏条目</span>
+              <h3>Collectible Card</h3>
+              <p>适合 cards 页、图鉴页、条目页、角色卡，让内容天然具备可收藏感。</p>
+              <div class="collect-meta"><span>图鉴</span><span>条目</span><span>收藏册</span></div>
+            </div>
+          </article>
+        </div>
+
+        <section class="library-shell">
+          <div class="library-head">
+            <div>
+              <div class="library-kicker">COMPONENT LIBRARY</div>
+              <div class="library-headline">原生组件库视图</div>
+            </div>
+            <div class="library-meta">
+              <span>4 Core Types</span>
+              <span>Icon Ready</span>
+              <span>NookPhone UI</span>
+            </div>
+          </div>
+
+          <div class="library-grid">
+            <article class="library-card">
+              <h4>Passport / Identity</h4>
+              <p>人物身份、资料字段、角色状态。</p>
+              <div class="compact-passport">
+                <div class="head"><span>RESIDENT</span><span>AYU</span></div>
+                <div class="body">
+                  <img src="file:///C:/Users/Yoselin/.codex/skills/ayu-design-system/assets/avatar.png" alt="Ayu avatar">
+                  <div>
+                    <h4>阿鱼 Ayu</h4>
+                    <p style="margin-top:4px">角色资料卡 / 护照卡</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="library-card">
+              <h4>Module / Entry</h4>
+              <p>功能入口、图鉴入口、分类导航。</p>
+              <div class="mini-entry">
+                <div class="mini-entry-icon"><img src="animal-island-icons/icon-design.5ac514dc.svg" alt=""></div>
+                <div>
+                  <h4>图鉴入口</h4>
+                  <p style="margin-top:4px">知识分类 / 页面入口</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="library-card">
+              <h4>Memo / Notice</h4>
+              <p>说明、提醒、便签、轻内容公告。</p>
+              <div class="mini-memo">
+                <h4 style="margin-top:4px">小岛提示</h4>
+                <p>这类组件负责承接规则、提醒、灵感和小纸条式信息。</p>
+              </div>
+            </article>
+
+            <article class="library-card">
+              <h4>Collectible / Entry</h4>
+              <p>图鉴条目、角色卡、可收藏内容。</p>
+              <div class="mini-collect">
+                <div class="head">COLLECTIBLE</div>
+                <div class="body">
+                  <h4 style="margin-top:0">抽卡签语条目</h4>
+                  <p>适合 cards 页与图鉴页。</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="system-panel">
+          <div class="system-top">
+            <div>
+              <div class="system-kicker">NOOKPHONE STYLE PANEL</div>
+              <div class="system-title">原生 UI 面板视图</div>
+            </div>
+            <div class="tab-strip">
+              <span class="active">Entries</span>
+              <span>Status</span>
+              <span>Cards</span>
+            </div>
+          </div>
+
+          <div class="system-grid">
+            <div class="dock-panel">
+              <h4>App Entry Family</h4>
+              <p>更像系统里的原生入口组，而不是网页上的组件文档示例。</p>
+              <div class="app-grid">
+                <article class="app-tile">
+                  <div class="tile-head">
+                    <div class="tile-icon"><img src="animal-island-icons/icon-critterpedia.2c4ac782.svg" alt=""></div>
+                    <div><h4>Critterpedia</h4><p>图鉴入口</p></div>
+                  </div>
+                  <span class="tile-badge">知识 / 收藏</span>
+                </article>
+                <article class="app-tile">
+                  <div class="tile-head">
+                    <div class="tile-icon" style="background:linear-gradient(180deg,#ffe294,#F7CD67)"><img src="animal-island-icons/icon-design.5ac514dc.svg" alt=""></div>
+                    <div><h4>Design</h4><p>设计入口</p></div>
+                  </div>
+                  <span class="tile-badge">模块 / 页面</span>
+                </article>
+                <article class="app-tile">
+                  <div class="tile-head">
+                    <div class="tile-icon" style="background:linear-gradient(180deg,#f1b28e,#E59266)"><img src="animal-island-icons/icon-miles.defd75be.svg" alt=""></div>
+                    <div><h4>Miles</h4><p>进度状态</p></div>
+                  </div>
+                  <span class="tile-badge">任务 / 收集</span>
+                </article>
+                <article class="app-tile">
+                  <div class="tile-head">
+                    <div class="tile-icon"><img src="animal-island-icons/icon-map.9182b8ee.svg" alt=""></div>
+                    <div><h4>Map</h4><p>导航入口</p></div>
+                  </div>
+                  <span class="tile-badge">地图 / 分区</span>
+                </article>
+              </div>
+            </div>
+
+            <div class="stack-side">
+              <div class="meter-card">
+                <div class="meter-head"><span>Resident Status</span><span>72%</span></div>
+                <div class="meter-bar"><div class="meter-fill" style="width:72%"></div></div>
+                <div class="mini-tags"><span>Passport</span><span>Identity</span><span>Status</span></div>
+              </div>
+
+              <div class="meter-card">
+                <div class="meter-head"><span>Content Family</span><span>4 Types</span></div>
+                <div class="mini-tags"><span>Memo</span><span>Entry</span><span>Collectible</span><span>Character</span></div>
+                <p style="margin-top:10px;font-size:12px;line-height:1.6;color:var(--muted)">更像系统里的组件编组面板，而不是网页说明卡。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="grid" style="margin-top:16px">
+          <section class="passport">
+            <div class="passport-head"><span>RESIDENT</span><span>AYU ISLAND</span></div>
+            <div class="passport-body">
+              <img src="file:///C:/Users/Yoselin/.codex/skills/ayu-design-system/assets/avatar.png" alt="Ayu avatar">
+              <div>
+                <h3>阿鱼 Ayu</h3>
+                <p>想成为魔法抽卡师的小巫师。人物感和系统感应该一起出现在组件总览页里。</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="note">
+            <h3>这页和 Esther 的最大差别</h3>
+            <p>它现在更像游戏手机里的系统面板，组件以入口、状态、内容家族的方式组织，而不是按网页设计案例去陈列。</p>
+          </section>
+        </div>
+
+        <div class="chip-grid">
+          <div class="entry-family">
+            <h3>入口类</h3>
+            <p>入口类不应该只是标签堆叠，而更像 NookPhone 里的 App 家族。</p>
+            <div class="entry-list">
+              <div class="entry-pill"><span class="dot">图</span><span>图鉴入口: 知识 / 条目 / 收藏目录</span></div>
+              <div class="entry-pill"><span class="dot" style="background:linear-gradient(180deg,#ffe294,#F7CD67);color:#8d6721">设</span><span>设计入口: 页面类型 / 视觉模块 / 玩法说明</span></div>
+              <div class="entry-pill"><span class="dot" style="background:linear-gradient(180deg,#f1b28e,#E59266)">DIY</span><span>DIY入口: 组合组件 / 卡型扩展 / 自定义玩法</span></div>
+            </div>
+          </div>
+
+          <div class="status-panel">
+            <h3>状态类</h3>
+            <p>状态类更适合做成系统状态板，而不是普通内容卡。</p>
+            <div class="status-row">
+              <div class="status-item"><div><b>里程标记</b><p style="margin-top:4px;font-size:12px;line-height:1.5">已收集、已完成、累计进度</p></div><span class="status-badge">72%</span></div>
+              <div class="status-item"><div><b>任务卡</b><p style="margin-top:4px;font-size:12px;line-height:1.5">今日待办、阶段目标、提醒</p></div><span class="status-badge sun">任务中</span></div>
+              <div class="status-item"><div><b>状态卡</b><p style="margin-top:4px;font-size:12px;line-height:1.5">角色状态、游乐园天气、能量值</p></div><span class="status-badge">晴天</span></div>
+            </div>
+          </div>
+
+          <div class="content-board">
+            <h3>内容类</h3>
+            <p>内容类更像一个可组合的内容板，可以根据主题去拼护照卡、便签卡、条目卡和角色卡。</p>
+            <div class="token-list"><span>Passport</span><span>Memo</span><span>Entry</span><span>Character</span><span>Quote</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
